@@ -7,20 +7,9 @@ namespace CodeBase.Infrastructure.Services.Input
     public class InputService : IInputService, IDisposable
     {
         private readonly InputSystem_Actions _inputActions;
-        private const float MinInputThreshold = 0.2f; 
 
-        public Vector2 MoveDirection
-        {
-            get
-            {
-                Vector2 input = _inputActions.Player.Move.ReadValue<Vector2>();
-
-                if (input.magnitude < MinInputThreshold)
-                    return Vector2.zero;
-
-                return input;
-            }
-        }
+        public Vector2 MoveDirection => _inputActions.Player.Move.ReadValue<Vector2>();
+        
         public Vector2 LookDirection => _inputActions.Player.Look.ReadValue<Vector2>();
 
         public InputService()
