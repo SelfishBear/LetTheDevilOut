@@ -1,86 +1,117 @@
-﻿using UnityEngine;
+﻿using System;
+using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.Input;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CodeBase.Logic
 {
     public class CameraZoom : MonoBehaviour
     {
-        [SerializeField] private PlayerSprint playerSprint;
+        [SerializeField] private PlayerSprint _playerSprint;
 
-        [Header("Zoom Settings")] public bool enableZoom = true;
+        [SerializeField] private bool _enableZoom = true;
+        [SerializeField] private bool _holdToZoom = false;
+        [SerializeField] private float _zoomFOV = 30f;
+        [SerializeField] private float _zoomStepTime = 5f;
 
-        public bool holdToZoom = false;
-        public KeyCode zoomKey = KeyCode.Mouse1;
-        public float zoomFOV = 30f;
-        public float zoomStepTime = 5f;
-
-        private bool isZoomed = false;
-        private PlayerCamera playerCamera;
-        private float defaultFOV;
+        private bool _isZoomed;
+        private float _defaultFOV;
+        private PlayerCamera _playerCamera;
+        private IInputService _inputService;
+        private InputSystem_Actions _inputActions;
 
         private void Awake()
         {
-            playerCamera = GetComponent<PlayerCamera>();
-            defaultFOV = playerCamera.fov;
+            _playerCamera = GetComponent<PlayerCamera>();
+            _defaultFOV = _playerCamera.FOV;
+        }
+
+        private void Start()
+        {
+            _inputService = AllServices.Container.Single<IInputService>();
+            _inputActions = _inputService.GetPlayerInputActions();
+            
+            if (_holdToZoom)
+            {
+                _inputActions.Player.Zoom.started += OnZoomStarted;
+                _inputActions.Player.Zoom.canceled += OnZoomCanceled;
+            }
+            else
+            {
+                _inputActions.Player.Zoom.performed += OnZoomToggle;
+            }
+        }
+
+        private void OnDestroy()
+        {
+            if (_inputActions != null)
+            {
+                if (_holdToZoom)
+                {
+                    _inputActions.Player.Zoom.started -= OnZoomStarted;
+                    _inputActions.Player.Zoom.canceled -= OnZoomCanceled;
+                }
+                else
+                {
+                    _inputActions.Player.Zoom.performed -= OnZoomToggle;
+                }
+            }
         }
 
         private void Update()
         {
-            if (!enableZoom) return;
-            HandleZoomDisabling();
+            if (!_enableZoom) return;
+            
+            if (_playerSprint.IsSprinting())
+            {
+                DisableZoom();
+            }
 
-            HandleZoomInput();
             ApplyZoom();
+        }
+
+        private void OnZoomStarted(InputAction.CallbackContext context)
+        {
+            if (_enableZoom && !_playerSprint.IsSprinting())
+            {
+                _isZoomed = true;
+            }
+        }
+
+        private void OnZoomCanceled(InputAction.CallbackContext context)
+        {
+            _isZoomed = false;
+        }
+
+        private void OnZoomToggle(InputAction.CallbackContext context)
+        {
+            if (_enableZoom && !_playerSprint.IsSprinting())
+            {
+                _isZoomed = !_isZoomed;
+            }
         }
 
         public void DisableZoom()
         {
-            isZoomed = false;
+            _isZoomed = false;
         }
 
         public bool IsZoomed()
         {
-            return isZoomed;
+            return _isZoomed;
         }
 
-        private void HandleZoomDisabling()
-        {
-            if (playerSprint.IsSprinting())
-            {
-                DisableZoom();
-            }
-        }
-
-        private void HandleZoomInput()
-        {
-            if (holdToZoom)
-            {
-                if (Input.GetKeyDown(zoomKey))
-                {
-                    isZoomed = true;
-                }
-                else if (Input.GetKeyUp(zoomKey))
-                {
-                    isZoomed = false;
-                }
-            }
-            else
-            {
-                if (Input.GetKeyDown(zoomKey))
-                {
-                    isZoomed = !isZoomed;
-                }
-            }
-        }
 
         private void ApplyZoom()
         {
-            if (isZoomed)
+            if (_isZoomed)
             {
-                playerCamera.SetFOV(zoomFOV, zoomStepTime);
+                _playerCamera.SetFOV(_zoomFOV, _zoomStepTime);
             }
             else
             {
-                playerCamera.SetFOV(defaultFOV, zoomStepTime);
+                _playerCamera.SetFOV(_defaultFOV, _zoomStepTime);
             }
         }
     }

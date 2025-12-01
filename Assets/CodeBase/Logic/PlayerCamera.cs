@@ -1,36 +1,39 @@
 ﻿using System;
+using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.GameplayServices;
 using UnityEngine;
 
 namespace CodeBase.Logic
 {
     public class PlayerCamera : MonoBehaviour
     {
-        [Header("Camera Settings")]
-        public Camera playerCamera;
-        public float fov = 60f;
-        public bool invertCamera = false;
-        public bool cameraCanMove = true;
-        public float mouseSensitivity = 2f;
-        public float maxLookAngle = 50f;
-
-        [Header("Cursor Settings")]
-        public bool lockCursor = true;
-
-        private float yaw = 0.0f;
-        private float pitch = 0.0f;
         [SerializeField] private Transform _playerTransform;
+        [SerializeField] private Camera _playerCamera;
+
+        [SerializeField] private float _fov = 60f;
+        [SerializeField] private bool _invertCamera;
+        [SerializeField] private bool _cameraCanMove = true;
+        [SerializeField] private float _mouseSensitivity = 2f;
+        [SerializeField] private float _maxLookAngle = 50f;
+        [SerializeField] private bool _isCursorVisible = true;
+        [SerializeField] private bool _isCursorLocked = true;
+
+        private float _yaw;
+        private float _pitch;
+        private ICursorService _cursorService;
+
+        public float FOV => _fov;
 
         private void Awake()
         {
-            playerCamera.fieldOfView = fov;
+            _playerCamera.fieldOfView = _fov;
         }
 
         private void Start()
         {
-            if (lockCursor)
-            {
-                Cursor.lockState = CursorLockMode.Locked;
-            }
+            _cursorService = AllServices.Container.Single<ICursorService>();
+            _cursorService.ChangeCursorState(_isCursorVisible, _isCursorLocked);
+            
         }
 
         private void Update()
@@ -40,34 +43,34 @@ namespace CodeBase.Logic
 
         public void HandleCameraRotation()
         {
-            if (!cameraCanMove) return;
+            if (!_cameraCanMove) return;
 
-            yaw = _playerTransform.localEulerAngles.y + Input.GetAxis("Mouse X") * mouseSensitivity;
+            _yaw = _playerTransform.localEulerAngles.y + Input.GetAxis("Mouse X") * _mouseSensitivity;
 
-            if (!invertCamera)
+            if (!_invertCamera)
             {
-                pitch -= mouseSensitivity * Input.GetAxis("Mouse Y");
+                _pitch -= _mouseSensitivity * Input.GetAxis("Mouse Y");
             }
             else
             {
-                pitch += mouseSensitivity * Input.GetAxis("Mouse Y");
+                _pitch += _mouseSensitivity * Input.GetAxis("Mouse Y");
             }
 
-            pitch = Mathf.Clamp(pitch, -maxLookAngle, maxLookAngle);
+            _pitch = Mathf.Clamp(_pitch, -_maxLookAngle, _maxLookAngle);
 
-            _playerTransform.localEulerAngles = new Vector3(0, yaw, 0);
-            playerCamera.transform.localEulerAngles = new Vector3(pitch, 0, 0);
+            _playerTransform.localEulerAngles = new Vector3(0, _yaw, 0);
+            _playerCamera.transform.localEulerAngles = new Vector3(_pitch, 0, 0);
         }
 
         public void SetFOV(float targetFOV, float stepTime)
         {
-            playerCamera.fieldOfView = Mathf.Lerp(playerCamera.fieldOfView, targetFOV, stepTime * Time.deltaTime);
+            _playerCamera.fieldOfView = Mathf.Lerp(_playerCamera.fieldOfView, targetFOV, stepTime * Time.deltaTime);
         }
 
         public float GetCurrentFOV()
         {
-            return playerCamera.fieldOfView;
+            return _playerCamera.fieldOfView;
         }
     }
+    
 }
-

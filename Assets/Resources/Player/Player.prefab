@@ -20,7 +20,6 @@ GameObject:
   - component: {fileID: 7754271745969144822}
   - component: {fileID: 2910177442012804937}
   - component: {fileID: 6098638591094070468}
-  - component: {fileID: 6944622654570891857}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -162,11 +161,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: c86b37975b1e4882a375815507d924cf, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
-  playerSprint: {fileID: 8618004525186996265}
-  playerCrouch: {fileID: 2910177442012804937}
-  playerCanMove: 1
-  walkSpeed: 5
-  maxVelocityChange: 10
+  _playerSprint: {fileID: 8618004525186996265}
+  _playerCrouch: {fileID: 2910177442012804937}
+  _playerCanMove: 1
+  _walkSpeed: 5
+  _maxVelocityChange: 10
 --- !u!114 &1410497855126228849
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -179,14 +178,15 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 617d417ca3c8459798f2b369362cd77e, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCamera
-  playerCamera: {fileID: 4459864851310106426}
-  fov: 60
-  invertCamera: 0
-  cameraCanMove: 1
-  mouseSensitivity: 2
-  maxLookAngle: 50
-  lockCursor: 1
   _playerTransform: {fileID: 4459864850019384738}
+  _playerCamera: {fileID: 4459864851310106426}
+  _fov: 60
+  _invertCamera: 0
+  _cameraCanMove: 1
+  _mouseSensitivity: 2
+  _maxLookAngle: 50
+  _isCursorVisible: 1
+  _isCursorLocked: 1
 --- !u!114 &5700047695189034757
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -199,12 +199,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 42dc6b8e8852457fb2eae6dd82877af2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraZoom
-  playerSprint: {fileID: 8618004525186996265}
-  enableZoom: 1
-  holdToZoom: 0
-  zoomKey: 324
-  zoomFOV: 30
-  zoomStepTime: 5
+  _playerSprint: {fileID: 8618004525186996265}
+  _enableZoom: 1
+  _holdToZoom: 0
+  _zoomFOV: 30
+  _zoomStepTime: 5
 --- !u!114 &8618004525186996265
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -217,20 +216,21 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cdbbf2dcffa9423bb9ea5c87deb67152, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerSprint
-  enableSprint: 1
-  unlimitedSprint: 0
-  sprintKey: 304
-  sprintSpeed: 7
-  sprintDuration: 5
-  sprintCooldown: 0.5
-  sprintFOV: 80
-  sprintFOVStepTime: 10
-  useSprintBar: 1
-  hideBarWhenFull: 1
-  sprintBarBG: {fileID: 4459864851397454648}
-  sprintBar: {fileID: 4459864850888339820}
-  sprintBarWidthPercent: 0.3
-  sprintBarHeightPercent: 0.015
+  _playerMovement: {fileID: 383737225334354780}
+  _playerCamera: {fileID: 1410497855126228849}
+  _enableSprint: 1
+  _unlimitedSprint: 0
+  _sprintSpeed: 7
+  _sprintDuration: 5
+  _sprintCooldown: 0.5
+  _sprintFOV: 80
+  _sprintFOVStepTime: 10
+  _useSprintBar: 1
+  _hideBarWhenFull: 1
+  _sprintBarBg: {fileID: 4459864851397454648}
+  _sprintBar: {fileID: 4459864850888339820}
+  _sprintBarWidthPercent: 0.3
+  _sprintBarHeightPercent: 0.015
 --- !u!114 &7754271745969144822
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,9 +243,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fff70ba5716d46a4b79c9089621f9c6b, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerJump
-  enableJump: 1
-  jumpKey: 32
-  jumpPower: 5
+  _enableJump: 1
+  _jumpPower: 5
 --- !u!114 &2910177442012804937
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -258,12 +257,12 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 53bc81e07f584f6c8b0d9e087164fedb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerCrouch
-  playerJump: {fileID: 7754271745969144822}
-  enableCrouch: 1
-  holdToCrouch: 1
-  crouchKey: 306
-  crouchHeight: 0.75
-  speedReduction: 0.5
+  _playerMovement: {fileID: 383737225334354780}
+  _playerJump: {fileID: 7754271745969144822}
+  _enableCrouch: 1
+  _holdToCrouch: 1
+  _crouchHeight: 0.75
+  _speedReduction: 0.5
 --- !u!114 &6098638591094070468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -276,100 +275,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fb638280337f4c5ab287c9af7780e06f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraHeadBob
-  enableHeadBob: 1
-  joint: {fileID: 4459864851508666808}
-  bobSpeed: 10
-  bobAmount: {x: 0.05, y: 0.14, z: 0}
---- !u!114 &6944622654570891857
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4459864850019384750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 607e4c95b21b455e855d1932b58e67eb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::Crosshair
-  showCrosshair: 1
-  crosshairImage: {fileID: 0}
-  crosshairColor: {r: 1, g: 1, b: 1, a: 1}
---- !u!1 &4459864850190357393
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 4459864850190357392}
-  - component: {fileID: 4459864850190357394}
-  - component: {fileID: 4459864850190357395}
-  m_Layer: 0
-  m_Name: Reticle
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &4459864850190357392
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4459864850190357393}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.05, y: 0.05, z: 0.05}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 4459864851551516607}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 50, y: 50}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4459864850190357394
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4459864850190357393}
-  m_CullTransparentMesh: 0
---- !u!114 &4459864850190357395
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4459864850190357393}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fe87c0e1cc204ed48ad3b37840f39efc, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 1, b: 1, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Sprite: {fileID: 0}
-  m_Type: 0
-  m_PreserveAspect: 0
-  m_FillCenter: 1
-  m_FillMethod: 4
-  m_FillAmount: 1
-  m_FillClockwise: 1
-  m_FillOrigin: 0
-  m_UseSpriteMesh: 0
-  m_PixelsPerUnitMultiplier: 1
+  _playerMovement: {fileID: 383737225334354780}
+  _playerSprint: {fileID: 8618004525186996265}
+  _playerCrouch: {fileID: 2910177442012804937}
+  _enableHeadBob: 1
+  _joint: {fileID: 4459864851508666808}
+  _bobSpeed: 10
+  _bobAmount: {x: 0.15, y: 0.05, z: 0}
 --- !u!1 &4459864850831721272
 GameObject:
   m_ObjectHideFlags: 0
@@ -506,6 +418,7 @@ GameObject:
   - component: {fileID: 4459864851310106429}
   - component: {fileID: 4459864851310106426}
   - component: {fileID: 4459864851310106427}
+  - component: {fileID: 5582359875441049225}
   m_Layer: 0
   m_Name: PlayerCamera
   m_TagString: MainCamera
@@ -588,6 +501,50 @@ AudioListener:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4459864851310106424}
   m_Enabled: 1
+--- !u!114 &5582359875441049225
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4459864851310106424}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a79441f348de89743a2939f4d699eac1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Unity.RenderPipelines.Universal.Runtime::UnityEngine.Rendering.Universal.UniversalAdditionalCameraData
+  m_RenderShadows: 1
+  m_RequiresDepthTextureOption: 2
+  m_RequiresOpaqueTextureOption: 2
+  m_CameraType: 0
+  m_Cameras: []
+  m_RendererIndex: -1
+  m_VolumeLayerMask:
+    serializedVersion: 2
+    m_Bits: 1
+  m_VolumeTrigger: {fileID: 0}
+  m_VolumeFrameworkUpdateModeOption: 2
+  m_RenderPostProcessing: 1
+  m_Antialiasing: 0
+  m_AntialiasingQuality: 2
+  m_StopNaN: 0
+  m_Dithering: 0
+  m_ClearDepth: 1
+  m_AllowXRRendering: 1
+  m_AllowHDROutput: 1
+  m_UseScreenCoordOverride: 0
+  m_ScreenSizeOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_ScreenCoordScaleBias: {x: 0, y: 0, z: 0, w: 0}
+  m_RequiresDepthTexture: 0
+  m_RequiresColorTexture: 0
+  m_TaaSettings:
+    m_Quality: 3
+    m_FrameInfluence: 0.1
+    m_JitterScale: 1
+    m_MipBias: 0
+    m_VarianceClampScale: 0.9
+    m_ContrastAdaptiveSharpening: 0
+  m_Version: 2
 --- !u!1 &4459864851397454630
 GameObject:
   m_ObjectHideFlags: 0
@@ -725,7 +682,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 4459864850190357392}
   - {fileID: 4459864850831721275}
   m_Father: {fileID: 4459864851310106429}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}

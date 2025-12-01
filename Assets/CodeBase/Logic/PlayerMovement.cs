@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.Input;
 using UnityEngine;
 using Zenject;
@@ -7,28 +8,27 @@ namespace CodeBase.Logic
 {
     public class PlayerMovement : MonoBehaviour
     {
-        [SerializeField] private PlayerSprint playerSprint;
-        [SerializeField] private PlayerCrouch playerCrouch;
+        [SerializeField] private PlayerSprint _playerSprint;
+        [SerializeField] private PlayerCrouch _playerCrouch;
 
-        [Header("Movement Settings")] public bool playerCanMove = true;
-        public float walkSpeed = 5f;
-        public float maxVelocityChange = 10f;
+        [SerializeField] private bool _playerCanMove = true;
+        [SerializeField] private float _walkSpeed = 5f;
+        [SerializeField] private float _maxVelocityChange = 10f;
 
-        private Rigidbody rb;
-        private bool isWalking = false;
-        private float currentSpeed;
+        private Rigidbody _rigidbody;
         private IInputService _inputService;
+        private bool _isWalking;
+        private float _currentSpeed;
 
-
-        [Inject]
-        public void Construct(IInputService inputService)
-        {
-            _inputService = inputService;
-        }
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
-            currentSpeed = walkSpeed;
+            _rigidbody = GetComponent<Rigidbody>();
+            _currentSpeed = _walkSpeed;
+        }
+
+        private void Start()
+        {
+            _inputService = AllServices.Container.Single<IInputService>();
         }
 
         private void FixedUpdate()
@@ -38,60 +38,60 @@ namespace CodeBase.Logic
 
         private void HandleMovement()
         {
-            if (playerSprint != null && playerSprint.CanSprint())
+            if (_playerSprint != null && _playerSprint.CanSprint())
             {
-                float speedRatio = playerSprint.GetSprintSpeed() / playerSprint.GetWalkSpeed();
+                float speedRatio = _playerSprint.GetSprintSpeed() / _playerSprint.GetWalkSpeed();
                 Move(speedRatio);
-                playerSprint.SetSprinting(true);
+                _playerSprint.SetSprinting(true);
 
-                if (playerCrouch != null && playerCrouch.IsCrouched())
+                if (_playerCrouch != null && _playerCrouch.IsCrouched())
                 {
-                    playerCrouch.Uncrouch();
+                    _playerCrouch.Uncrouch();
                 }
             }
             else
             {
                 Move();
-                if (playerSprint != null)
+                if (_playerSprint != null)
                 {
-                    playerSprint.SetSprinting(false);
+                    _playerSprint.SetSprinting(false);
                 }
             }
         }
 
         public void Move(float speedMultiplier = 1f)
         {
-            if (!playerCanMove) return;
+            if (!_playerCanMove) return;
 
             Vector3 targetVelocity = new Vector3(_inputService.MoveDirection.x, 0, _inputService.MoveDirection.y);
 
-            isWalking = (targetVelocity.x != 0 || targetVelocity.z != 0);
+            _isWalking = (targetVelocity.x != 0 || targetVelocity.z != 0);
 
-            currentSpeed = walkSpeed * speedMultiplier;
-            targetVelocity = transform.TransformDirection(targetVelocity) * currentSpeed;
+            _currentSpeed = _walkSpeed * speedMultiplier;
+            targetVelocity = transform.TransformDirection(targetVelocity) * _currentSpeed;
 
-            Vector3 velocity = rb.linearVelocity;
+            Vector3 velocity = _rigidbody.linearVelocity;
             Vector3 velocityChange = (targetVelocity - velocity);
-            velocityChange.x = Mathf.Clamp(velocityChange.x, -maxVelocityChange, maxVelocityChange);
-            velocityChange.z = Mathf.Clamp(velocityChange.z, -maxVelocityChange, maxVelocityChange);
+            velocityChange.x = Mathf.Clamp(velocityChange.x, -_maxVelocityChange, _maxVelocityChange);
+            velocityChange.z = Mathf.Clamp(velocityChange.z, -_maxVelocityChange, _maxVelocityChange);
             velocityChange.y = 0;
 
-            rb.AddForce(velocityChange, ForceMode.VelocityChange);
+            _rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
         }
 
         public bool IsWalking()
         {
-            return isWalking;
+            return _isWalking;
         }
 
         public float GetWalkSpeed()
         {
-            return walkSpeed;
+            return _walkSpeed;
         }
 
         public void SetWalkSpeed(float speed)
         {
-            walkSpeed = speed;
+            _walkSpeed = speed;
         }
     }
 }

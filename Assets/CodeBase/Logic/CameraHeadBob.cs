@@ -4,69 +4,63 @@ namespace CodeBase.Logic
 {
     public class CameraHeadBob : MonoBehaviour
     {
-        [Header("Head Bob Settings")]
-        public bool enableHeadBob = true;
-        public Transform joint;
-        public float bobSpeed = 10f;
-        public Vector3 bobAmount = new Vector3(.15f, .05f, 0f);
+        [SerializeField] private PlayerMovement _playerMovement;
+        [SerializeField] private PlayerSprint _playerSprint;
+        [SerializeField] private PlayerCrouch _playerCrouch;
+        [SerializeField] private bool _enableHeadBob = true;
+        [SerializeField] private Transform _joint;
+        [SerializeField] private float _bobSpeed = 10f;
+        [SerializeField] private Vector3 _bobAmount = new Vector3(.15f, .05f, 0f);
 
-        private Vector3 jointOriginalPos;
-        private float timer = 0;
-        private PlayerMovement playerMovement;
-        private PlayerSprint playerSprint;
-        private PlayerCrouch playerCrouch;
+        private Vector3 _jointOriginalPos;
+        private float _timer;
 
         private void Awake()
         {
-            if (joint != null)
+            if (_joint != null)
             {
-                jointOriginalPos = joint.localPosition;
+                _jointOriginalPos = _joint.localPosition;
             }
-        
-            playerMovement = GetComponentInParent<PlayerMovement>();
-            playerSprint = GetComponentInParent<PlayerSprint>();
-            playerCrouch = GetComponentInParent<PlayerCrouch>();
         }
 
         private void Update()
         {
-            if (!enableHeadBob || joint == null) return;
+            if (!_enableHeadBob || _joint == null) return;
 
             ApplyHeadBob();
         }
 
         private void ApplyHeadBob()
         {
-            if (playerMovement.IsWalking())
+            if (_playerMovement.IsWalking())
             {
-                float currentBobSpeed = bobSpeed;
+                float currentBobSpeed = _bobSpeed;
 
-                if (playerSprint != null && playerSprint.IsSprinting())
+                if (_playerSprint != null && _playerSprint.IsSprinting())
                 {
-                    currentBobSpeed = bobSpeed + playerSprint.GetSprintSpeed();
+                    currentBobSpeed = _bobSpeed + _playerSprint.GetSprintSpeed();
                 }
-                else if (playerCrouch != null && playerCrouch.IsCrouched())
+                else if (_playerCrouch != null && _playerCrouch.IsCrouched())
                 {
-                    currentBobSpeed = bobSpeed * playerCrouch.speedReduction;
+                    currentBobSpeed = _bobSpeed * _playerCrouch.SpeedReduction;
                 }
 
-                timer += Time.deltaTime * currentBobSpeed;
-                joint.localPosition = new Vector3(
-                    jointOriginalPos.x + Mathf.Sin(timer) * bobAmount.x,
-                    jointOriginalPos.y + Mathf.Sin(timer) * bobAmount.y,
-                    jointOriginalPos.z + Mathf.Sin(timer) * bobAmount.z
+                _timer += Time.deltaTime * currentBobSpeed;
+                _joint.localPosition = new Vector3(
+                    _jointOriginalPos.x + Mathf.Sin(_timer) * _bobAmount.x,
+                    _jointOriginalPos.y + Mathf.Sin(_timer) * _bobAmount.y,
+                    _jointOriginalPos.z + Mathf.Sin(_timer) * _bobAmount.z
                 );
             }
             else
             {
-                timer = 0;
-                joint.localPosition = new Vector3(
-                    Mathf.Lerp(joint.localPosition.x, jointOriginalPos.x, Time.deltaTime * bobSpeed),
-                    Mathf.Lerp(joint.localPosition.y, jointOriginalPos.y, Time.deltaTime * bobSpeed),
-                    Mathf.Lerp(joint.localPosition.z, jointOriginalPos.z, Time.deltaTime * bobSpeed)
+                _timer = 0;
+                _joint.localPosition = new Vector3(
+                    Mathf.Lerp(_joint.localPosition.x, _jointOriginalPos.x, Time.deltaTime * _bobSpeed),
+                    Mathf.Lerp(_joint.localPosition.y, _jointOriginalPos.y, Time.deltaTime * _bobSpeed),
+                    Mathf.Lerp(_joint.localPosition.z, _jointOriginalPos.z, Time.deltaTime * _bobSpeed)
                 );
             }
         }
     }
 }
-

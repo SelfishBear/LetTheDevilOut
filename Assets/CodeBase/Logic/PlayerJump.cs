@@ -1,27 +1,48 @@
-﻿using UnityEngine;
+﻿using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.Input;
+using UnityEngine;
+using UnityEngine.InputSystem;
 
 namespace CodeBase.Logic
 {
     public class PlayerJump : MonoBehaviour
     {
-        [Header("Jump Settings")]
-        public bool enableJump = true;
-        public KeyCode jumpKey = KeyCode.Space;
-        public float jumpPower = 5f;
+        [SerializeField] private bool _enableJump = true;
+        [SerializeField] private float _jumpPower = 5f;
 
-        private Rigidbody rb;
-        private bool isGrounded = false;
+        private Rigidbody _rigidbody;
+        private bool _isGrounded;
+        private IInputService _inputService;
+        private InputSystem_Actions _inputActions;
 
         private void Awake()
         {
-            rb = GetComponent<Rigidbody>();
+            _rigidbody = GetComponent<Rigidbody>();
+        }
+
+        private void Start()
+        {
+            _inputService = AllServices.Container.Single<IInputService>();
+            _inputActions = _inputService.GetPlayerInputActions();
+            _inputActions.Player.Jump.performed += OnJumpPerformed;
+        }
+
+        private void OnDestroy()
+        {
+            if (_inputActions != null)
+            {
+                _inputActions.Player.Jump.performed -= OnJumpPerformed;
+            }
         }
 
         private void Update()
         {
             CheckGround();
+        }
 
-            if (enableJump && Input.GetKeyDown(jumpKey) && isGrounded)
+        private void OnJumpPerformed(InputAction.CallbackContext context)
+        {
+            if (_enableJump && _isGrounded)
             {
                 Jump();
             }
@@ -36,26 +57,26 @@ namespace CodeBase.Logic
             if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
             {
                 Debug.DrawRay(origin, direction * distance, Color.red);
-                isGrounded = true;
+                _isGrounded = true;
             }
             else
             {
-                isGrounded = false;
+                _isGrounded = false;
             }
         }
 
         private void Jump()
         {
-            if (isGrounded)
+            if (_isGrounded)
             {
-                rb.AddForce(0f, jumpPower, 0f, ForceMode.Impulse);
-                isGrounded = false;
+                _rigidbody.AddForce(0f, _jumpPower, 0f, ForceMode.Impulse);
+                _isGrounded = false;
             }
         }
 
         public bool IsGrounded()
         {
-            return isGrounded;
+            return _isGrounded;
         }
 
         public void ForceJump()

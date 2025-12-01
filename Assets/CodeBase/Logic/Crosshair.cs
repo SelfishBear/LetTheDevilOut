@@ -1,44 +1,37 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using UnityEngine.UI;
 
 namespace CodeBase.Logic
 {
     public class Crosshair : MonoBehaviour
     {
-        [Header("Crosshair Settings")]
-        public bool showCrosshair = true;
-        public Sprite crosshairImage;
-        public Color crosshairColor = Color.white;
-
-        private Image crosshairObject;
-
-        private void Awake()
-        {
-            crosshairObject = GetComponentInChildren<Image>();
-        }
+        [SerializeField] private bool _showCrosshair = true;
+        [SerializeField] private Sprite _crosshairImage;
+        [SerializeField] private Image _crosshairObject;
+        [SerializeField] private Color _crosshairColor = Color.white;
 
         private void Start()
         {
-            if (showCrosshair)
+            if (_showCrosshair)
             {
-                crosshairObject.sprite = crosshairImage;
-                crosshairObject.color = crosshairColor;
+                _crosshairObject.sprite = _crosshairImage;
+                _crosshairObject.color = _crosshairColor;
             }
             else
             {
-                crosshairObject.gameObject.SetActive(false);
+                _crosshairObject.gameObject.SetActive(false);
             }
         }
-
+        
         public void Show()
         {
-            crosshairObject.gameObject.SetActive(true);
+            _crosshairObject.gameObject.SetActive(true);
         }
 
         public void Hide()
         {
-            crosshairObject.gameObject.SetActive(false);
+            _crosshairObject.gameObject.SetActive(false);
         }
     }
 }
-

@@ -2,6 +2,7 @@
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Randomizer;
 using CodeBase.Infrastructure.Services;
+using CodeBase.Infrastructure.Services.GameplayServices;
 using CodeBase.Infrastructure.Services.Input;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.SaveLoad;
@@ -39,9 +40,10 @@ namespace CodeBase.Infrastructure.States
         {
             RegisterStaticDataService();
 
+            _services.RegisterSingle<ICursorService>(new CursorService());
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
             RegisterAssetProvider();
-            // _services.RegisterSingle<IInputService>(new InputService());
+            _services.RegisterSingle<IInputService>(new InputService());
             _services.RegisterSingle<IRandomService>(new RandomService());
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
 
