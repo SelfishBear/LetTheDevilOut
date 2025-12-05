@@ -91,6 +91,8 @@ namespace CodeBase.Infrastructure.States
         private HUDPrefab InitHud(PlayerPrefab player)
         {
             HUDPrefab hud = GetHud();
+            
+            hud.SprintBarUI.Construct(player.PlayerSprint);
 
             return hud;
         }

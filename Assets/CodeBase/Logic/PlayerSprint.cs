@@ -13,30 +13,27 @@ namespace CodeBase.Logic
         [SerializeField] private PlayerCamera _playerCamera;
 
         [SerializeField] private bool _enableSprint = true;
-        [SerializeField] private bool _unlimitedSprint = false;
+        [SerializeField] private bool _unlimitedSprint;
         [SerializeField] private float _sprintSpeed = 7f;
         [SerializeField] private float _sprintDuration = 5f;
         [SerializeField] private float _sprintCooldown = .5f;
         [SerializeField] private float _sprintFOV = 80f;
         [SerializeField] private float _sprintFOVStepTime = 10f;
 
-        [SerializeField] private bool _useSprintBar = true;
-        [SerializeField] private bool _hideBarWhenFull = true;
-        [SerializeField] private Image _sprintBarBg;
-        [SerializeField] private Image _sprintBar;
-        [SerializeField] private float _sprintBarWidthPercent = .3f;
-        [SerializeField] private float _sprintBarHeightPercent = .015f;
-
-        private CanvasGroup _sprintBarCg;
         private bool _isSprinting;
         private bool _isSprintKeyPressed;
+
         private float _sprintRemaining;
-        private float _sprintBarWidth;
-        private float _sprintBarHeight;
         private bool _isSprintCooldown;
         private float _sprintCooldownReset;
+
         private IInputService _inputService;
         private InputSystem_Actions _inputActions;
+
+        public bool UnlimitedSprint => _unlimitedSprint;
+        public float SprintRemaining => _sprintRemaining;
+        public float SprintDuration => _sprintDuration;
+
 
         private void Awake()
         {
@@ -49,8 +46,6 @@ namespace CodeBase.Logic
 
         private void Start()
         {
-            SetupSprintBar();
-            
             _inputService = AllServices.Container.Single<IInputService>();
             _inputActions = _inputService.GetPlayerInputActions();
             _inputActions.Player.Sprint.started += OnSprintStarted;
@@ -76,42 +71,11 @@ namespace CodeBase.Logic
             _isSprintKeyPressed = false;
         }
 
-        private void SetupSprintBar()
-        {
-            _sprintBarCg = GetComponentInChildren<CanvasGroup>();
-
-            if (_useSprintBar)
-            {
-                _sprintBarBg.gameObject.SetActive(true);
-                _sprintBar.gameObject.SetActive(true);
-
-                float screenWidth = Screen.width;
-                float screenHeight = Screen.height;
-
-                _sprintBarWidth = screenWidth * _sprintBarWidthPercent;
-                _sprintBarHeight = screenHeight * _sprintBarHeightPercent;
-
-                _sprintBarBg.rectTransform.sizeDelta = new Vector3(_sprintBarWidth, _sprintBarHeight, 0f);
-                _sprintBar.rectTransform.sizeDelta = new Vector3(_sprintBarWidth - 2, _sprintBarHeight - 2, 0f);
-
-                if (_hideBarWhenFull)
-                {
-                    _sprintBarCg.alpha = 0;
-                }
-            }
-            else
-            {
-                _sprintBarBg.gameObject.SetActive(false);
-                _sprintBar.gameObject.SetActive(false);
-            }
-        }
-
         private void Update()
         {
             if (!_enableSprint) return;
 
             HandleSprint();
-            UpdateSprintBar();
         }
 
         private void HandleSprint()
@@ -148,31 +112,15 @@ namespace CodeBase.Logic
                 _sprintCooldown = _sprintCooldownReset;
             }
         }
-
-        private void UpdateSprintBar()
-        {
-            if (_useSprintBar && !_unlimitedSprint)
-            {
-                float sprintRemainingPercent = _sprintRemaining / _sprintDuration;
-                _sprintBar.transform.localScale = new Vector3(sprintRemainingPercent, 1f, 1f);
-
-                if (_hideBarWhenFull)
-                {
-                    if (_isSprinting)
-                    {
-                        _sprintBarCg.alpha += 5 * Time.deltaTime;
-                    }
-                    else if (_sprintRemaining >= _sprintDuration)
-                    {
-                        _sprintBarCg.alpha -= 3 * Time.deltaTime;
-                    }
-                }
-            }
-        }
-
+        
         public bool IsSprinting()
         {
             return _isSprinting;
+        }
+
+        public bool IsSprintLeft()
+        {
+            return _sprintRemaining >= _sprintDuration;
         }
 
         public bool CanSprint()
