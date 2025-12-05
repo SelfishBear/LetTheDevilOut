@@ -93,7 +93,7 @@ Material:
     - _HorzFuzzOpt: 0.1
     - _MaxColorsBlue: 0
     - _MaxColorsGreen: 0
-    - _MaxColorsRed: 0
+    - _MaxColorsRed: 164
     - _Metallic: 0
     - _Mode: 0
     - _OcclusionStrength: 1

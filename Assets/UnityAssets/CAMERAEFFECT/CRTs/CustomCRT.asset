@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CustomCRT
   m_EditorClassIdentifier: Assembly-CSharp::BrewedInk.CRT.CRTDataObject
   data:
-    pixelationAmount: 797
+    pixelationAmount: 8
     maxColorChannels:
       red: 0
       green: 0
@@ -42,4 +42,4 @@ MonoBehaviour:
       sizeMultiplier: 2
     innerMonitorShineRadius: -0.087
     innerMonitorShineCurve: 10
-  validationId: 67908474-a94e-4643-9a81-5db2e681ab42
+  validationId: 4ec4e494-5730-426f-8aa4-5222f849e14a
