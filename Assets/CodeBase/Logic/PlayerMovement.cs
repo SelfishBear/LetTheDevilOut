@@ -10,19 +10,22 @@ namespace CodeBase.Logic
     {
         [SerializeField] private PlayerSprint _playerSprint;
         [SerializeField] private PlayerCrouch _playerCrouch;
+        [SerializeField] private CharacterController _characterController;
 
         [SerializeField] private bool _playerCanMove = true;
         [SerializeField] private float _walkSpeed = 5f;
         [SerializeField] private float _maxVelocityChange = 10f;
 
-        private Rigidbody _rigidbody;
         private IInputService _inputService;
         private bool _isWalking;
         private float _currentSpeed;
+        private Vector3 _velocity;
+        private float _gravity = -9.81f;
+        
+        public Vector3 Velocity => _velocity;
 
         private void Awake()
         {
-            _rigidbody = GetComponent<Rigidbody>();
             _currentSpeed = _walkSpeed;
         }
 
@@ -31,7 +34,7 @@ namespace CodeBase.Logic
             _inputService = AllServices.Container.Single<IInputService>();
         }
 
-        private void FixedUpdate()
+        private void Update()
         {
             HandleMovement();
         }
@@ -59,24 +62,26 @@ namespace CodeBase.Logic
             }
         }
 
-        public void Move(float speedMultiplier = 1f)
+        private void Move(float speedMultiplier = 1f)
         {
             if (!_playerCanMove) return;
 
-            Vector3 targetVelocity = new Vector3(_inputService.MoveDirection.x, 0, _inputService.MoveDirection.y);
+            Vector3 inputDirection = new Vector3(_inputService.MoveDirection.x, 0, _inputService.MoveDirection.y);
 
-            _isWalking = (targetVelocity.x != 0 || targetVelocity.z != 0);
+            _isWalking = (inputDirection.x != 0 || inputDirection.z != 0);
 
             _currentSpeed = _walkSpeed * speedMultiplier;
-            targetVelocity = transform.TransformDirection(targetVelocity) * _currentSpeed;
+            Vector3 moveDirection = transform.TransformDirection(inputDirection) * _currentSpeed;
 
-            Vector3 velocity = _rigidbody.linearVelocity;
-            Vector3 velocityChange = (targetVelocity - velocity);
-            velocityChange.x = Mathf.Clamp(velocityChange.x, -_maxVelocityChange, _maxVelocityChange);
-            velocityChange.z = Mathf.Clamp(velocityChange.z, -_maxVelocityChange, _maxVelocityChange);
-            velocityChange.y = 0;
+            if (_characterController.isGrounded && _velocity.y < 0)
+            {
+                _velocity.y = -2f;
+            }
 
-            _rigidbody.AddForce(velocityChange, ForceMode.VelocityChange);
+            _velocity.y += _gravity * Time.deltaTime;
+
+            Vector3 finalMovement = moveDirection + new Vector3(0, _velocity.y, 0);
+            _characterController.Move(finalMovement * Time.deltaTime);
         }
 
         public bool IsWalking()
@@ -92,6 +97,11 @@ namespace CodeBase.Logic
         public void SetWalkSpeed(float speed)
         {
             _walkSpeed = speed;
+        }
+
+        public void SetVerticalVelocity(float velocity)
+        {
+            _velocity.y = velocity;
         }
     }
 }

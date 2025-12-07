@@ -9,17 +9,14 @@ namespace CodeBase.Logic
     {
         [SerializeField] private bool _enableJump = true;
         [SerializeField] private float _jumpPower = 5f;
+        [SerializeField] private float _gravity = -9.81f;
+        [SerializeField] private CharacterController _characterController;
+        [SerializeField] private PlayerMovement _playerMovement;
 
-        private Rigidbody _rigidbody;
         private bool _isGrounded;
         private IInputService _inputService;
         private InputSystem_Actions _inputActions;
-
-        private void Awake()
-        {
-            _rigidbody = GetComponent<Rigidbody>();
-        }
-
+        
         private void Start()
         {
             _inputService = AllServices.Container.Single<IInputService>();
@@ -50,27 +47,17 @@ namespace CodeBase.Logic
 
         private void CheckGround()
         {
-            Vector3 origin = new Vector3(transform.position.x, transform.position.y - (transform.localScale.y * .5f), transform.position.z);
-            Vector3 direction = transform.TransformDirection(Vector3.down);
-            float distance = .75f;
-
-            if (Physics.Raycast(origin, direction, out RaycastHit hit, distance))
-            {
-                Debug.DrawRay(origin, direction * distance, Color.red);
-                _isGrounded = true;
-            }
-            else
-            {
-                _isGrounded = false;
-            }
+            _isGrounded = _characterController.isGrounded;
         }
 
         private void Jump()
         {
+            print("Jump");
             if (_isGrounded)
             {
-                _rigidbody.AddForce(0f, _jumpPower, 0f, ForceMode.Impulse);
-                _isGrounded = false;
+                print("IsGrounded");
+                float jumpVelocity = Mathf.Sqrt(_jumpPower * -2f * _gravity);
+                _playerMovement.SetVerticalVelocity(jumpVelocity);
             }
         }
 
@@ -78,11 +65,5 @@ namespace CodeBase.Logic
         {
             return _isGrounded;
         }
-
-        public void ForceJump()
-        {
-            Jump();
-        }
     }
 }
-

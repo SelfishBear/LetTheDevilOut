@@ -93,6 +93,8 @@ namespace CodeBase.Infrastructure.States
             HUDPrefab hud = GetHud();
             
             hud.SprintBarUI.Construct(player.PlayerSprint);
+            player.Interactor.Construct(hud);
+            
 
             return hud;
         }
