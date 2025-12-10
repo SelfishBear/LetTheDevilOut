@@ -9,6 +9,7 @@ namespace CodeBase.Logic
     public class CameraZoom : MonoBehaviour
     {
         [SerializeField] private PlayerSprint _playerSprint;
+        [SerializeField] private PlayerFlashlight _playerFlashlight;
 
         [SerializeField] private bool _enableZoom = true;
         [SerializeField] private bool _holdToZoom = false;
@@ -108,10 +109,12 @@ namespace CodeBase.Logic
             if (_isZoomed)
             {
                 _playerCamera.SetFOV(_zoomFOV, _zoomStepTime);
+                _playerFlashlight.ZoomFlashlight(_isZoomed);
             }
             else
             {
                 _playerCamera.SetFOV(_defaultFOV, _zoomStepTime);
+                _playerFlashlight.ZoomFlashlight(_isZoomed);
             }
         }
     }

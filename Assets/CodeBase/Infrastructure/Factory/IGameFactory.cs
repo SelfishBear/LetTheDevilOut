@@ -14,8 +14,8 @@ namespace CodeBase.Infrastructure.Factory
 		List<ISavedProgress> ProgressWriters { get; }
 		HUDPrefab HUD { get; set; }
 		PlayerPrefab HeroPrefab { get; }
-		
 		PlayerPrefab CreateHero(GameObject at);
+		GameObject CreateKiller(GameObject at);
 		HUDPrefab CreateHud();
 		void Cleanup();
 	}

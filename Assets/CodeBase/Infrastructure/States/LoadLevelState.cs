@@ -2,6 +2,8 @@
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.StaticData;
 using CodeBase.Logic;
+using CodeBase.Logic.Killer;
+using CodeBase.Logic.Map;
 using CodeBase.PlayerLogic;
 using CodeBase.StaticData;
 using CodeBase.UI.HUD;
@@ -15,6 +17,7 @@ namespace CodeBase.Infrastructure.States
     public class LoadLevelState : IPayloadedState<string>
     {
         private const string InitialPointTag = "InitialPoint";
+        private const string InitialKillerPointTag = "KillerInitialPoint";
         private readonly IGameFactory _gameFactory;
         private readonly LoadingCurtain _loadingCurtain;
         private readonly IPersistentProgressService _progressService;
@@ -54,10 +57,10 @@ namespace CodeBase.Infrastructure.States
             InitUIRoot();
             InitGameWorld();
             InformProgressReaders();
-            
+
             _stateMachine.Enter<GameLoopState>();
         }
-        
+
         private void InitUIRoot()
         {
             _uiFactory.CreateUIRoot();
@@ -77,6 +80,7 @@ namespace CodeBase.Infrastructure.States
             string sceneKey = SceneManager.GetActiveScene().name;
             LevelStaticData levelData = _staticData.ForLevel(sceneKey);
             PlayerPrefab player = InitHero();
+            GameObject killer = InitKiller();
             HUDPrefab HUD = InitHud(player);
         }
 
@@ -88,13 +92,24 @@ namespace CodeBase.Infrastructure.States
             return player;
         }
 
+        private GameObject InitKiller()
+        {
+            GameObject spawnPoint = GameObject.FindWithTag(InitialKillerPointTag);
+            PatrolPoint[] patrolPoints = Object.FindObjectsByType<PatrolPoint>(FindObjectsSortMode.None);
+
+            GameObject killer = _gameFactory.CreateKiller(spawnPoint);
+            killer.GetComponent<EnemyAI>().Construct(patrolPoints);
+
+            return killer;
+        }
+
         private HUDPrefab InitHud(PlayerPrefab player)
         {
             HUDPrefab hud = GetHud();
-            
+
             hud.SprintBarUI.Construct(player.PlayerSprint);
             player.Interactor.Construct(hud);
-            
+
 
             return hud;
         }

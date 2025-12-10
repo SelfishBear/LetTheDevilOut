@@ -11,7 +11,7 @@ namespace CodeBase.Infrastructure.Services.StaticData
     {
         private const string LevelsDataPath = "StaticData/Levels";
         private const string StaticDataWindowPath = "StaticData/UI/Window";
-        private const string HeroDataPath = "StaticData/Hero/Hero";
+        private const string HeroDataPath = "StaticData/Hero";
         
         private HeroStaticData _hero;
         private Dictionary<string, LevelStaticData> _levels;

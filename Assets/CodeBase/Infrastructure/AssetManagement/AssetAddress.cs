@@ -3,6 +3,7 @@ namespace CodeBase.Infrastructure.AssetManagement
     public static class AssetAddress
     {
         public const string PlayerPath = "Player/Player";
+        public const string KillerPath = "Killer/Killer";
         public const string Loot = "EnemyLoot/Loot";
         public const string HudPath = "UI/HUD";
         public const string EnemySpawner = "Enemies/SpawnPoint";

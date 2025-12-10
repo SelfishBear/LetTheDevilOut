@@ -5,38 +5,54 @@ namespace CodeBase.StaticData
     [CreateAssetMenu(fileName = "Player", menuName = "Static Data/Player")]
     public class HeroStaticData : ScriptableObject
     {
-        [Range(10, 100)] public float WeightCapacity;
-        [Range(0f, 2f)] public float StaminaRegenRate;
-        [Range(0f, 2f)] public float HealthRegenRate;
-        [Range(1, 10)] public float ScytheRadius;
-        [Range(1, 10)] public float WalkSpeed;
-        [Range(1, 20)] public float SprintSpeed;
-        [Range(1, 20)] public float JumpForce;
-        [Range(25, 200)] public float MaxHealth;
-        [Range(1f, 20f)] public float MaxStamina;
+        [Range(0, 10)] public float MoveSpeed;
+        [Range(0, 100)] public float FOV;
+        [Range(0, 10)] public float MouseSensitivity;
+        [Range(0, 100)] public float MaxLookAngle;
+        [Range(0, 100)] public float ZoomFOV;
+        [Range(0, 10)] public float SprintSpeed;
+        [Range(0, 10)] public float SprintDuration;
+        [Range(0, 1)] public float SprintCooldown;
+        [Range(0, 100)] public float SprintFOV;
+        [Range(0, 50)] public float SprintFOVStepTime;
+        
+        [Header("Flashlight Settings")]
+        [Range(0, 100)] public float BaseRange;
+        [Range(0, 100)] public float BaseSpotAngle;
+        [Range(0, 100)] public float BaseStepTime;
+        
+        private float _baseRange = 20f;
+        private float _baseSpotAngle = 80f;
+        private float _baseStepTime = 5f;
 
-        private readonly float _baseHealthRegenRate = 0.2f;
-        private readonly float _baseJumpForce = 5f;
-        private readonly float _baseMaxHealth = 100f;
-        private readonly float _baseMaxStamina = 3f;
 
-        private readonly float _baseScytheRadius = 3f;
-        private readonly float _baseSprintSpeed = 1f;
-        private readonly float _baseStaminaRegenRate = 0.2f;
-        private readonly float _baseWalkSpeed = 4f;
-        private readonly float _baseWeightCapacity = 20f;
+        private float _baseMoveSpeed = 5f;
+        private float _baseFOV = 60f;
+        private float _baseMouseSensitivity = 2f;
+        private float _baseMaxLookAngle = 50f;
+        private float _baseZoomFOV = 30f;
+        private float _baseSprintSpeed = 7f;
+        private float _baseSprintDuration = 5f;
+        private float _baseSprintCooldown = 0.5f;
+        private float _baseSprintFOV = 80f;
+        private float _baseSprintFOVStepTime = 10f;
+
 
         public void Reset()
         {
-            ScytheRadius = _baseScytheRadius;
-            WalkSpeed = _baseWalkSpeed;
+            MoveSpeed = _baseMoveSpeed;
+            FOV = _baseFOV;
+            MouseSensitivity = _baseMouseSensitivity;
+            MaxLookAngle = _baseMaxLookAngle;
+            ZoomFOV = _baseZoomFOV;
             SprintSpeed = _baseSprintSpeed;
-            JumpForce = _baseJumpForce;
-            MaxHealth = _baseMaxHealth;
-            MaxStamina = _baseMaxStamina;
-            WeightCapacity = _baseWeightCapacity;
-            StaminaRegenRate = _baseStaminaRegenRate;
-            HealthRegenRate = _baseHealthRegenRate;
+            SprintDuration = _baseSprintDuration;
+            SprintCooldown = _baseSprintCooldown;
+            SprintFOV = _baseSprintFOV;
+            SprintFOVStepTime = _baseSprintFOVStepTime; 
+            
+            BaseRange = _baseRange;
+            BaseSpotAngle = _baseSpotAngle;
         }
     }
 }

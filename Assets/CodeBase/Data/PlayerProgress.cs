@@ -19,7 +19,6 @@ namespace CodeBase.Data
         public void Reset()
         {
             HeroState.Reset();
-            HeroStats.Reset();
         }
     }
 }

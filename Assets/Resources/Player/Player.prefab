@@ -195,6 +195,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 2506723806175407804}
+  - {fileID: 7689339380339033267}
   m_Father: {fileID: 4459864851508666808}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!20 &8418060956314875027
@@ -272,7 +273,7 @@ MonoBehaviour:
   crtRenderSettings: {fileID: 11400000, guid: 2d929546960894d169f1999a321e4ff4, type: 2}
   _runtimeMaterial: {fileID: 0}
   data:
-    pixelationAmount: 2
+    pixelationAmount: 0
     maxColorChannels:
       red: 0
       green: 0
@@ -827,6 +828,103 @@ Transform:
   - {fileID: 1884298961696684428}
   m_Father: {fileID: 5245728967897180923}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!1 &2286742654684057933
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 7689339380339033267}
+  - component: {fileID: 5505606783298916299}
+  m_Layer: 0
+  m_Name: Spot Light
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &7689339380339033267
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2286742654684057933}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 4577509750366474413}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
+--- !u!108 &5505606783298916299
+Light:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2286742654684057933}
+  m_Enabled: 0
+  serializedVersion: 11
+  m_Type: 0
+  m_Color: {r: 1, g: 1, b: 1, a: 1}
+  m_Intensity: 1
+  m_Range: 20
+  m_SpotAngle: 80
+  m_InnerSpotAngle: 1
+  m_CookieSize: 10
+  m_Shadows:
+    m_Type: 0
+    m_Resolution: -1
+    m_CustomResolution: -1
+    m_Strength: 1
+    m_Bias: 0.05
+    m_NormalBias: 0.4
+    m_NearPlane: 0.2
+    m_CullingMatrixOverride:
+      e00: 1
+      e01: 0
+      e02: 0
+      e03: 0
+      e10: 0
+      e11: 1
+      e12: 0
+      e13: 0
+      e20: 0
+      e21: 0
+      e22: 1
+      e23: 0
+      e30: 0
+      e31: 0
+      e32: 0
+      e33: 1
+    m_UseCullingMatrixOverride: 0
+  m_Cookie: {fileID: 0}
+  m_DrawHalo: 0
+  m_Flare: {fileID: 0}
+  m_RenderMode: 0
+  m_CullingMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
+  m_RenderingLayerMask: 1
+  m_Lightmapping: 4
+  m_LightShadowCasterMode: 0
+  m_AreaSize: {x: 1, y: 1}
+  m_BounceIntensity: 1
+  m_ColorTemperature: 6570
+  m_UseColorTemperature: 0
+  m_BoundingSphereOverride: {x: 0, y: 0, z: 0, w: 0}
+  m_UseBoundingSphereOverride: 0
+  m_UseViewFrustumForShadowCasterCull: 1
+  m_ForceVisible: 0
+  m_ShadowRadius: 0
+  m_ShadowAngle: 0
+  m_LightUnit: 1
+  m_LuxAtDistance: 1
+  m_EnableSpotReflector: 1
 --- !u!1 &2611785113314530648
 GameObject:
   m_ObjectHideFlags: 0
@@ -1130,12 +1228,11 @@ GameObject:
   - component: {fileID: 1410497855126228849}
   - component: {fileID: 5700047695189034757}
   - component: {fileID: 8618004525186996265}
-  - component: {fileID: 7754271745969144822}
-  - component: {fileID: 2910177442012804937}
   - component: {fileID: 6098638591094070468}
   - component: {fileID: 5880920805282940375}
   - component: {fileID: 5349672555530458954}
   - component: {fileID: 4147250569835692799}
+  - component: {fileID: 8631034229514746783}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -1253,7 +1350,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::PlayerMovement
   _playerSprint: {fileID: 8618004525186996265}
-  _playerCrouch: {fileID: 2910177442012804937}
   _characterController: {fileID: 3815321516356994247}
   _playerCanMove: 1
   _walkSpeed: 5
@@ -1292,6 +1388,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CameraZoom
   _playerSprint: {fileID: 8618004525186996265}
+  _playerFlashlight: {fileID: 8631034229514746783}
   _enableZoom: 1
   _holdToZoom: 0
   _zoomFOV: 30
@@ -1317,41 +1414,6 @@ MonoBehaviour:
   _sprintCooldown: 0.5
   _sprintFOV: 80
   _sprintFOVStepTime: 10
---- !u!114 &7754271745969144822
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4459864850019384750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fff70ba5716d46a4b79c9089621f9c6b, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerJump
-  _enableJump: 1
-  _jumpPower: 1
-  _gravity: -9.81
-  _characterController: {fileID: 3815321516356994247}
-  _playerMovement: {fileID: 383737225334354780}
---- !u!114 &2910177442012804937
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4459864850019384750}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 53bc81e07f584f6c8b0d9e087164fedb, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: Assembly-CSharp::PlayerCrouch
-  _playerMovement: {fileID: 383737225334354780}
-  _playerJump: {fileID: 7754271745969144822}
-  _enableCrouch: 1
-  _holdToCrouch: 1
-  _crouchHeight: 0.75
-  _speedReduction: 0.5
 --- !u!114 &6098638591094070468
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1366,7 +1428,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: Assembly-CSharp::CameraHeadBob
   _playerMovement: {fileID: 383737225334354780}
   _playerSprint: {fileID: 8618004525186996265}
-  _playerCrouch: {fileID: 2910177442012804937}
   _enableHeadBob: 1
   _joint: {fileID: 4459864851508666808}
   _bobSpeed: 10
@@ -1414,6 +1475,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: abdafb585bd148309f84a8b009ed4df2, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CodeBase.Logic.Inventory
+--- !u!114 &8631034229514746783
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4459864850019384750}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: b40c66944ed04c148b178541828a28e2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CodeBase.Logic.PlayerFlashlight
+  _onRange: 80
+  _onSpotAngle: 40
+  _playerMovement: {fileID: 383737225334354780}
+  _spotLight: {fileID: 5505606783298916299}
 --- !u!1 &4459864851508666809
 GameObject:
   m_ObjectHideFlags: 0

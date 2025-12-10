@@ -4,6 +4,9 @@ using CodeBase.Infrastructure.Randomizer;
 using CodeBase.Infrastructure.Services.PersistentProgress;
 using CodeBase.Infrastructure.Services.StaticData;
 using CodeBase.Infrastructure.States;
+using CodeBase.Logic;
+using CodeBase.Logic.Killer;
+using CodeBase.Logic.Map;
 using CodeBase.PlayerLogic;
 using CodeBase.UI.HUD;
 using UnityEngine;
@@ -45,17 +48,15 @@ namespace CodeBase.Infrastructure.Factory
             HeroPrefab = InstantiateRegistered(AssetAddress.PlayerPath, at.transform.position)
                 .GetComponent<PlayerPrefab>();
 
-
-            // if (HeroPrefab.TryGetComponent(out Interactor interactor))
-            //     interactor.Construct(_inputService);
-
-            // if (HeroPrefab.TryGetComponent(out FirstPersonController controller))
-            //     controller.Construct(_inputService);
-            //
-            // if (HeroPrefab.TryGetComponent(out BGGrassCutter cutter))
-            //     cutter.Construct(_inputService, this, _progressService);
+            HeroPrefab.GetComponent<PlayerFlashlight>().Construct(heroStaticData: _staticData.ForHero());
 
             return HeroPrefab;
+        }
+
+        public GameObject CreateKiller(GameObject at)
+        {
+            GameObject killer = InstantiateRegistered(AssetAddress.KillerPath, at.transform.position);
+            return killer;
         }
 
         public HUDPrefab CreateHud()

@@ -6,7 +6,6 @@ namespace CodeBase.Logic
     {
         [SerializeField] private PlayerMovement _playerMovement;
         [SerializeField] private PlayerSprint _playerSprint;
-        [SerializeField] private PlayerCrouch _playerCrouch;
         [SerializeField] private bool _enableHeadBob = true;
         [SerializeField] private Transform _joint;
         [SerializeField] private float _bobSpeed = 10f;
@@ -40,11 +39,7 @@ namespace CodeBase.Logic
                 {
                     currentBobSpeed = _bobSpeed + _playerSprint.GetSprintSpeed();
                 }
-                else if (_playerCrouch != null && _playerCrouch.IsCrouched())
-                {
-                    currentBobSpeed = _bobSpeed * _playerCrouch.SpeedReduction;
-                }
-
+                
                 _timer += Time.deltaTime * currentBobSpeed;
                 _joint.localPosition = new Vector3(
                     _jointOriginalPos.x + Mathf.Sin(_timer) * _bobAmount.x,

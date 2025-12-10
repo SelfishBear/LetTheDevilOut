@@ -9,7 +9,6 @@ namespace CodeBase.Logic
     public class PlayerMovement : MonoBehaviour
     {
         [SerializeField] private PlayerSprint _playerSprint;
-        [SerializeField] private PlayerCrouch _playerCrouch;
         [SerializeField] private CharacterController _characterController;
 
         [SerializeField] private bool _playerCanMove = true;
@@ -46,11 +45,6 @@ namespace CodeBase.Logic
                 float speedRatio = _playerSprint.GetSprintSpeed() / _playerSprint.GetWalkSpeed();
                 Move(speedRatio);
                 _playerSprint.SetSprinting(true);
-
-                if (_playerCrouch != null && _playerCrouch.IsCrouched())
-                {
-                    _playerCrouch.Uncrouch();
-                }
             }
             else
             {
