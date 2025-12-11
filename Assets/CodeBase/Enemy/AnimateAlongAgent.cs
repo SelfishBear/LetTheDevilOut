@@ -12,13 +12,13 @@ namespace CodeBase.Enemy
     [SerializeField] private NavMeshAgent Agent;
     [SerializeField] private EnemyAnimator Animator;
 
-    private void Update()
-    {
-      if(ShouldMove())
-        Animator.Move(Agent.velocity.magnitude);
-      else 
-        Animator.StopMoving();
-    }
+    // private void Update()
+    // {
+    //   if(ShouldMove())
+    //     Animator.Move(Agent.velocity.magnitude);
+    //   else 
+    //     Animator.StopMoving();
+    // }
 
     private bool ShouldMove() => 
       Agent != null && Agent.isActiveAndEnabled && Agent.isOnNavMesh && 

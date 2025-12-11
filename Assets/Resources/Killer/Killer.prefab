@@ -803,7 +803,7 @@ NavMeshAgent:
   m_AutoTraverseOffMeshLink: 1
   m_AutoBraking: 1
   m_AutoRepath: 1
-  m_Height: 2
+  m_Height: 4.91
   m_BaseOffset: 0
   m_WalkableMask: 4294967295
   m_ObstacleAvoidanceType: 4
@@ -831,15 +831,18 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 3c38547d04464fd6915241fa620009fc, type: 3}
   m_Name: 
   m_EditorClassIdentifier: Assembly-CSharp::CodeBase.Logic.Killer.EnemyAI
-  _layerMask:
+  _wallLayerMask:
     serializedVersion: 2
     m_Bits: 1
+  _playerLayerMask:
+    serializedVersion: 2
+    m_Bits: 64
   _enemyAnimator: {fileID: 4130060277489706705}
   _navMeshAgent: {fileID: 5141113444111697710}
-  _patrolSpeed: 2
+  _patrolSpeed: 1
   _runSpeed: 5
   _detectionRange: 10
-  _raycastRange: 5
+  _attackRange: 3
   _detectionAngle: 45
 --- !u!1 &4108429663409290928
 GameObject:

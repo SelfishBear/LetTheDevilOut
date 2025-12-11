@@ -11,20 +11,20 @@ namespace CodeBase.Logic.Killer
 {
     public class EnemyAI : MonoBehaviour
     {
-        [SerializeField] private LayerMask _layerMask;
+        [SerializeField] private LayerMask _wallLayerMask;
+        [SerializeField] private LayerMask _playerLayerMask;
         [SerializeField] private EnemyAnimator _enemyAnimator;
         [SerializeField] private NavMeshAgent _navMeshAgent;
         [SerializeField] private float _patrolSpeed = 2f;
         [SerializeField] private float _runSpeed = 5f;
         [SerializeField] private float _detectionRange = 10f;
-        [SerializeField] private float _raycastRange = 5f;
+        [SerializeField] private float _attackRange = 5f;
         [SerializeField] private float _detectionAngle = 45f;
 
 
         private EnemyStateMachine _enemyStateMachine;
         private Transform[] _patrolPoints;
         private PlayerPrefab _targetPlayer;
-
         public float PatrolSpeed => _patrolSpeed;
         public float RunSpeed => _runSpeed;
         public float DetectionRange => _detectionRange;
@@ -52,7 +52,7 @@ namespace CodeBase.Logic.Killer
 
         private void Start()
         {
-            _enemyStateMachine.ChangeState<PatrolState>(new PatrolState(this, _enemyStateMachine));
+            _enemyStateMachine.ChangeState<PatrolState>(new PatrolState(this, _enemyStateMachine, _enemyAnimator));
         }
 
         private void Update()
@@ -76,7 +76,8 @@ namespace CodeBase.Logic.Killer
 
 #if UNITY_EDITOR
             UnityEditor.Handles.color = Color.yellow;
-            UnityEditor.Handles.DrawWireArc(origin, Vector3.up, leftDirection.normalized, _detectionAngle, _detectionRange);
+            UnityEditor.Handles.DrawWireArc(origin, Vector3.up, leftDirection.normalized, _detectionAngle,
+                _detectionRange);
 #endif
         }
 
@@ -96,15 +97,52 @@ namespace CodeBase.Logic.Killer
                 return false;
 
             if (Physics.Raycast(transform.position, directionToPlayer.normalized, out RaycastHit hit, distanceToPlayer,
-                    _layerMask))
+                    _wallLayerMask))
                 return false;
-            
+
             return true;
         }
 
         public bool CanAttackPlayer()
         {
+            if (_targetPlayer == null)
+                return false;
+
+            Vector3 directionToPlayer = _targetPlayer.transform.position - transform.position;
+            float distanceToPlayer = directionToPlayer.magnitude;
+            if (distanceToPlayer > _attackRange)
+                return false;
+            
             return true;
+        }
+
+        public Transform GetFarthestPatrolPointFromPlayer()
+        {
+            if (_patrolPoints == null || _patrolPoints.Length == 0)
+                return null;
+
+            if (_targetPlayer == null)
+                return _patrolPoints[0];
+
+            Transform farthestPoint = null;
+            float maxDistance = 0f;
+
+            foreach (Transform point in _patrolPoints)
+            {
+                float distance = Vector3.Distance(point.position, _targetPlayer.transform.position);
+                if (distance > maxDistance)
+                {
+                    maxDistance = distance;
+                    farthestPoint = point;
+                }
+            }
+
+            return farthestPoint;
+        }
+
+        public void OnAttack()
+        {
+            _enemyStateMachine.ChangeState(new RetreatState(this, _enemyStateMachine, _enemyAnimator));
         }
     }
 }
