@@ -1,4 +1,5 @@
-﻿using CodeBase.Enemy;
+﻿using CodeBase.Audio;
+using CodeBase.Enemy;
 using UnityEngine;
 
 namespace CodeBase.Logic.Killer
@@ -8,16 +9,19 @@ namespace CodeBase.Logic.Killer
         private readonly EnemyAI _enemyAI;
         private readonly EnemyStateMachine _enemyStateMachine;
         private readonly EnemyAnimator _enemyAnimator;
+        private readonly SoundPlayer _soundPlayer;
 
-        public ChaseState(EnemyAI enemyAI, EnemyStateMachine enemyStateMachine, EnemyAnimator enemyAnimator)
+        public ChaseState(EnemyAI enemyAI, EnemyStateMachine enemyStateMachine, EnemyAnimator enemyAnimator, SoundPlayer soundPlayer)
         {
             _enemyAI = enemyAI;
             _enemyStateMachine = enemyStateMachine;
             _enemyAnimator = enemyAnimator;
+            _soundPlayer = soundPlayer;
         }
         public void Enter()
         {
             _enemyAI.NavMeshAgent.speed = _enemyAI.RunSpeed;
+            _soundPlayer.PlayLoopSound();
             Debug.Log("Enter Chase State");
         }
 
@@ -28,17 +32,18 @@ namespace CodeBase.Logic.Killer
 
             if (_enemyAI.CanAttackPlayer())
             {
-                _enemyStateMachine.ChangeState<AttackState>(new AttackState(_enemyAI, _enemyStateMachine, _enemyAnimator));
+                _enemyStateMachine.ChangeState<AttackState>(new AttackState(_enemyAI, _enemyStateMachine, _enemyAnimator, _soundPlayer));
             }
 
             if (!_enemyAI.CanSeePlayer())
             {
-                _enemyStateMachine.ChangeState<PatrolState>(new PatrolState(_enemyAI, _enemyStateMachine, _enemyAnimator));
+                _enemyStateMachine.ChangeState<PatrolState>(new PatrolState(_enemyAI, _enemyStateMachine, _enemyAnimator, _soundPlayer));
             }
         }
 
         public void Exit()
         {
+            _soundPlayer.StopSound();
             _enemyAnimator.Run(false);
         }
     }

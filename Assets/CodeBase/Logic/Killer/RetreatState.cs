@@ -1,4 +1,5 @@
-﻿using CodeBase.Enemy;
+﻿using CodeBase.Audio;
+using CodeBase.Enemy;
 using UnityEngine;
 
 namespace CodeBase.Logic.Killer
@@ -8,12 +9,14 @@ namespace CodeBase.Logic.Killer
         private readonly EnemyAI _enemyAI;
         private readonly EnemyStateMachine _enemyStateMachine;
         private readonly EnemyAnimator _enemyAnimator;
+        private readonly SoundPlayer _soundPlayer;
 
-        public RetreatState(EnemyAI enemyAI, EnemyStateMachine enemyStateMachine, EnemyAnimator enemyAnimator)
+        public RetreatState(EnemyAI enemyAI, EnemyStateMachine enemyStateMachine, EnemyAnimator enemyAnimator, SoundPlayer soundPlayer)
         {
             _enemyAI = enemyAI;
             _enemyStateMachine = enemyStateMachine;
             _enemyAnimator = enemyAnimator;
+            _soundPlayer = soundPlayer;
         }
 
         public void Enter()
@@ -35,7 +38,7 @@ namespace CodeBase.Logic.Killer
         {
             if (_enemyAI.NavMeshAgent.remainingDistance < 0.5f)
             {
-                _enemyStateMachine.ChangeState(new PatrolState(_enemyAI, _enemyStateMachine, _enemyAnimator));
+                _enemyStateMachine.ChangeState(new PatrolState(_enemyAI, _enemyStateMachine, _enemyAnimator, _soundPlayer));
             }
         }
 

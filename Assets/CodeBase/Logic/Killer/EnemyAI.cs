@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeBase.Audio;
 using CodeBase.Enemy;
 using CodeBase.Infrastructure.Factory;
 using CodeBase.Infrastructure.Services;
@@ -11,6 +12,7 @@ namespace CodeBase.Logic.Killer
 {
     public class EnemyAI : MonoBehaviour
     {
+        [SerializeField] private SoundPlayer _soundPlayer;
         [SerializeField] private LayerMask _wallLayerMask;
         [SerializeField] private LayerMask _playerLayerMask;
         [SerializeField] private EnemyAnimator _enemyAnimator;
@@ -52,7 +54,7 @@ namespace CodeBase.Logic.Killer
 
         private void Start()
         {
-            _enemyStateMachine.ChangeState<PatrolState>(new PatrolState(this, _enemyStateMachine, _enemyAnimator));
+            _enemyStateMachine.ChangeState<PatrolState>(new PatrolState(this, _enemyStateMachine, _enemyAnimator, _soundPlayer));
         }
 
         private void Update()
@@ -142,7 +144,7 @@ namespace CodeBase.Logic.Killer
 
         public void OnAttack()
         {
-            _enemyStateMachine.ChangeState(new RetreatState(this, _enemyStateMachine, _enemyAnimator));
+            _enemyStateMachine.ChangeState(new RetreatState(this, _enemyStateMachine, _enemyAnimator, _soundPlayer));
         }
     }
 }

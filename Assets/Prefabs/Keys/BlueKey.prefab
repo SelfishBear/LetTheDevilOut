@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 7863301623646972091}
   - component: {fileID: 6528378775884998056}
   - component: {fileID: 4916391937025252371}
+  - component: {fileID: 4577867707217723557}
   m_Layer: 3
   m_Name: BlueKey
   m_TagString: Untagged
@@ -72,6 +73,19 @@ MonoBehaviour:
   _keyType: 2
   <Interactable>k__BackingField: 1
   <InteractionMessage>k__BackingField: Get Key
+--- !u!114 &4577867707217723557
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6586380701880126115}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f31bdc4ad22d4460badd1d973fb9deac, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CodeBase.Logic.KeyRotator
+  _key: {fileID: 4916391937025252371}
 --- !u!1001 &3625019044259019322
 PrefabInstance:
   m_ObjectHideFlags: 0
