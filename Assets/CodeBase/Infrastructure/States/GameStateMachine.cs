@@ -7,6 +7,7 @@ using CodeBase.Infrastructure.Services.SaveLoad;
 using CodeBase.Infrastructure.Services.StaticData;
 using CodeBase.Logic;
 using CodeBase.UI.Services.Factory;
+using CodeBase.UI.Services.Windows;
 
 namespace CodeBase.Infrastructure.States
 {
@@ -20,13 +21,18 @@ namespace CodeBase.Infrastructure.States
             _states = new Dictionary<Type, IExitableState>
             {
                 [typeof(BootstrapState)] = new BootstrapState(this, sceneLoader, services),
+                
+                [typeof(MonologueState)] = new MonologueState(this, sceneLoader, services, loadingCurtain),
+                
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,
                     services.Single<IGameFactory>(),
                     services.Single<IPersistentProgressService>(), services.Single<IStaticDataService>(),
-                    services.Single<IUIFactory>()),
+                    services.Single<IUIFactory>(),
+                    services.Single<IWindowService>()),
 
                 [typeof(LoadProgressState)] = new LoadProgressState(this, services.Single<IPersistentProgressService>(),
                     services.Single<ISaveLoadService>()),
+                
                 [typeof(GameLoopState)] = new GameLoopState(this),
             };
         }

@@ -48,7 +48,10 @@ namespace CodeBase.Infrastructure.States
             _services.RegisterSingle<IPersistentProgressService>(new PersistentProgressService());
 
             _services.RegisterSingle<IUIFactory>(new UIFactory(
-                _services.Single<IAssetProvider>()));
+                    _services.Single<IAssetProvider>(),
+                    _services.Single<IStaticDataService>()
+                )
+            );
 
             _services.RegisterSingle<IWindowService>(new WindowService(_services.Single<IUIFactory>()));
 
@@ -57,8 +60,8 @@ namespace CodeBase.Infrastructure.States
                 _services.Single<IStaticDataService>(),
                 _services.Single<IRandomService>(),
                 _services.Single<IPersistentProgressService>(),
-            _services.Single<IGameStateMachine>()
-                ));
+                _services.Single<IGameStateMachine>()
+            ));
 
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
                 _services.Single<IPersistentProgressService>(),
@@ -70,7 +73,7 @@ namespace CodeBase.Infrastructure.States
             AssetProvider assetProvider = new AssetProvider();
             _services.RegisterSingle<IAssetProvider>(assetProvider);
         }
-        
+
         private void RegisterStaticDataService()
         {
             IStaticDataService staticData = new StaticDataService();
@@ -79,6 +82,6 @@ namespace CodeBase.Infrastructure.States
         }
 
         private void EnterLoadLevel() =>
-            _stateMachine.Enter<LoadProgressState>();
+            _stateMachine.Enter<MonologueState, string>("Monologue");
     }
 }

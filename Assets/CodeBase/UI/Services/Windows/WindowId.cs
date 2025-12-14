@@ -3,6 +3,6 @@
 	public enum WindowId
 	{
 		None = 0,
-
+		SettingsWindow,
 	}
 }

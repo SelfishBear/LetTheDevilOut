@@ -6,7 +6,7 @@ namespace CodeBase.Infrastructure.States
 {
     public class LoadProgressState : IState
     {
-        private const string Helllobby = "HellLobby";
+        private const string MainGame = "MainGame";
         private readonly GameStateMachine _gameStateMachine;
         private readonly IPersistentProgressService _progressService;
         private readonly ISaveLoadService _saveLoadProgress;
@@ -23,7 +23,7 @@ namespace CodeBase.Infrastructure.States
         {
             LoadProgressOrInitNew();
 
-            _gameStateMachine.Enter<LoadLevelState, string>(Helllobby);
+            _gameStateMachine.Enter<LoadLevelState, string>(MainGame);
         }
 
         public void Exit()

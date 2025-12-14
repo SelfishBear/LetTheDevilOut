@@ -7,6 +7,7 @@ using CodeBase.Infrastructure.Services.StaticData;
 using CodeBase.Infrastructure.States;
 using CodeBase.Logic;
 using CodeBase.StaticData.Windows;
+using CodeBase.UI.Elements;
 using CodeBase.UI.Services.Windows;
 using UnityEngine;
 
@@ -16,12 +17,13 @@ namespace CodeBase.UI.Services.Factory
     {
         private const string UIRootPath = "UI/UIRoot";
         private readonly IAssetProvider _assets;
-        private readonly ISaveLoadService _saveLoadService;
+        private readonly IStaticDataService _staticData;
         private Transform _uiRoot;
 
-        public UIFactory(IAssetProvider assets)
+        public UIFactory(IAssetProvider assets, IStaticDataService staticData)
         {
             _assets = assets;
+            _staticData = staticData;
         }
 
         public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
@@ -34,6 +36,12 @@ namespace CodeBase.UI.Services.Factory
         // 	TutorialCanvas window = Object.Instantiate(config.Template, _uiRoot) as TutorialCanvas;
         // 	window?.Init(_stateMachine, _progressService, _loadingCurtain, _factory);
         // }
+
+        public void CreateSettingsWindow()
+        {
+            WindowConfig config = _staticData.ForWindow(WindowId.SettingsWindow);
+            SettingsWindow window = Object.Instantiate(config.Template, _uiRoot) as SettingsWindow;
+        }
 
         public void CreateUIRoot()
         {

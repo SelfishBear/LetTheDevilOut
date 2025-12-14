@@ -12,7 +12,7 @@ namespace CodeBase.Infrastructure.Services.StaticData
         private const string LevelsDataPath = "StaticData/Levels";
         private const string StaticDataWindowPath = "StaticData/UI/Window";
         private const string HeroDataPath = "StaticData/Hero";
-        
+
         private HeroStaticData _hero;
         private Dictionary<string, LevelStaticData> _levels;
         private Dictionary<WindowId, WindowConfig> _windowConfigs;
@@ -23,13 +23,14 @@ namespace CodeBase.Infrastructure.Services.StaticData
                 .LoadAll<LevelStaticData>(LevelsDataPath)
                 .ToDictionary(x => x.LevelKey, x => x);
 
-            // _windowConfigs = Resources
-            //     .Load<WindowStaticData>(StaticDataWindowPath)
-            //     .Configs
-            //     .ToDictionary(x => x.WindowId, x => x);
-            
+            _windowConfigs = Resources
+                .Load<WindowStaticData>(StaticDataWindowPath)
+                .Configs
+                .ToDictionary(x => x.WindowId, x => x);
+
             _hero = Resources.Load<HeroStaticData>(HeroDataPath);
         }
+
         public HeroStaticData ForHero()
         {
             return _hero;

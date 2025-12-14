@@ -18,6 +18,9 @@ namespace CodeBase.UI.Services.Windows
             {
                 case WindowId.None:
                     break;
+                case WindowId.SettingsWindow:
+                    _uiFactory.CreateSettingsWindow();
+                    break;
             }
         }
     }
