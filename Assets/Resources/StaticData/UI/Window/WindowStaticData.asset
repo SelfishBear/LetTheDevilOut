@@ -13,5 +13,7 @@ MonoBehaviour:
   m_Name: WindowStaticData
   m_EditorClassIdentifier: Assembly-CSharp::CodeBase.StaticData.Windows.WindowStaticData
   Configs:
-  - WindowId: 1
+  - WindowId: 0
     Template: {fileID: 0}
+  - WindowId: 1
+    Template: {fileID: 8391871267280826421, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}

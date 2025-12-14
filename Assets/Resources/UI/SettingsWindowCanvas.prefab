@@ -420,7 +420,7 @@ RectTransform:
   m_Father: {fileID: 109526092032645876}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1121,7 +1121,7 @@ RectTransform:
   m_Father: {fileID: 3516829602022610736}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 10, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -1848,13 +1848,14 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2657155185055687060}
+  - component: {fileID: 7258870251547440851}
   m_Layer: 5
   m_Name: SettingsPanelContainer
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &2657155185055687060
 RectTransform:
   m_ObjectHideFlags: 0
@@ -1875,6 +1876,18 @@ RectTransform:
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
+--- !u!225 &7258870251547440851
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5812364717055690786}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0
 --- !u!1 &5956901690050773245
 GameObject:
   m_ObjectHideFlags: 0
@@ -1908,7 +1921,7 @@ RectTransform:
   m_Father: {fileID: 4523111101473884609}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 47.3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2212,7 +2225,7 @@ RectTransform:
   m_Father: {fileID: 6636161767706303197}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
-  m_AnchorMax: {x: 0, y: 1}
+  m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
   m_SizeDelta: {x: 47.3, y: 0}
   m_Pivot: {x: 0.5, y: 0.5}
@@ -2266,6 +2279,8 @@ GameObject:
   - component: {fileID: 8370274317371086025}
   - component: {fileID: 4576463387696080336}
   - component: {fileID: 765923107058096707}
+  - component: {fileID: 8391871267280826421}
+  - component: {fileID: 6866414377581956829}
   m_Layer: 5
   m_Name: SettingsWindowCanvas
   m_TagString: Untagged
@@ -2358,3 +2373,33 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
+--- !u!114 &8391871267280826421
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9057942617901859386}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 80d413bdd5274cbfbdb19e16849df26f, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CodeBase.UI.Elements.SettingsWindow
+  _settingsButton: {fileID: 1175479158793853052}
+  _closeGameButton: {fileID: 3985375633627055886}
+  _mainCanvasGroup: {fileID: 6866414377581956829}
+  _settingsPanelCanvasGroup: {fileID: 7258870251547440851}
+  _musicVolumeSlider: {fileID: 4571827016971764568}
+  _sfxVolumeSlider: {fileID: 3090715255504777772}
+--- !u!225 &6866414377581956829
+CanvasGroup:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 9057942617901859386}
+  m_Enabled: 1
+  m_Alpha: 0
+  m_Interactable: 0
+  m_BlocksRaycasts: 0
+  m_IgnoreParentGroups: 0

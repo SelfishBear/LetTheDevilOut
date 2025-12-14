@@ -33,7 +33,6 @@ namespace CodeBase.Logic
         {
             _cursorService = AllServices.Container.Single<ICursorService>();
             _cursorService.ChangeCursorState(_isCursorVisible, _isCursorLocked);
-            
         }
 
         private void Update()

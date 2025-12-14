@@ -1,4 +1,5 @@
 ﻿using System;
+using CodeBase.Audio;
 using UnityEngine;
 
 namespace CodeBase.Logic.Events
@@ -6,6 +7,7 @@ namespace CodeBase.Logic.Events
     public class CapybaraEvent : TriggerEvent
     {
         [SerializeField] private Door _door;
+        [SerializeField] private CapybaraSound _sound;
 
         private void Start()
         {
@@ -19,6 +21,7 @@ namespace CodeBase.Logic.Events
 
         protected override void Execute()
         {
+            _sound.PlayCapybaraSound();
             Debug.Log("Capybara Event Triggered");
         }
     }

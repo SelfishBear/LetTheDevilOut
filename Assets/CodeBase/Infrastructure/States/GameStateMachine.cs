@@ -24,6 +24,8 @@ namespace CodeBase.Infrastructure.States
                 
                 [typeof(MonologueState)] = new MonologueState(this, sceneLoader, services, loadingCurtain),
                 
+                [typeof(MainMenuState)] = new MainMenuState(this, sceneLoader, services, loadingCurtain),
+                
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,
                     services.Single<IGameFactory>(),
                     services.Single<IPersistentProgressService>(), services.Single<IStaticDataService>(),

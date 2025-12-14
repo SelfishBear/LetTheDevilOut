@@ -475,6 +475,22 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 2444334895495781514, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2444334895495781514, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2444334895495781514, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 2444334895495781514, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 2489897728781689813, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}
       propertyPath: m_AnchorMax.y
       value: 0
@@ -485,6 +501,22 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4802836625125056397, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}
       propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472693391379374302, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}
+      propertyPath: m_AnchorMax.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472693391379374302, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}
+      propertyPath: m_AnchorMin.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472693391379374302, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5472693391379374302, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}
+      propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 8996243571472908321, guid: a9da6ba1b3c801e44b8f608f9789d4f2, type: 3}

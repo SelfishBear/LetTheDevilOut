@@ -9,9 +9,9 @@ namespace CodeBase.Logic.Killer
         private readonly EnemyAI _enemyAI;
         private readonly EnemyStateMachine _enemyStateMachine;
         private readonly EnemyAnimator _enemyAnimator;
-        private readonly SoundPlayer _soundPlayer;
+        private readonly KillerScreamSound _soundPlayer;
 
-        public RetreatState(EnemyAI enemyAI, EnemyStateMachine enemyStateMachine, EnemyAnimator enemyAnimator, SoundPlayer soundPlayer)
+        public RetreatState(EnemyAI enemyAI, EnemyStateMachine enemyStateMachine, EnemyAnimator enemyAnimator, KillerScreamSound soundPlayer)
         {
             _enemyAI = enemyAI;
             _enemyStateMachine = enemyStateMachine;

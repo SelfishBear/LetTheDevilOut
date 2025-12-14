@@ -9,9 +9,9 @@ namespace CodeBase.Logic.Killer
         private readonly EnemyAI _enemyAI;
         private readonly EnemyStateMachine _enemyStateMachine;
         private readonly EnemyAnimator _enemyAnimator;
-        private readonly SoundPlayer _soundPlayer;
+        private readonly KillerScreamSound _soundPlayer;
 
-        public ChaseState(EnemyAI enemyAI, EnemyStateMachine enemyStateMachine, EnemyAnimator enemyAnimator, SoundPlayer soundPlayer)
+        public ChaseState(EnemyAI enemyAI, EnemyStateMachine enemyStateMachine, EnemyAnimator enemyAnimator, KillerScreamSound soundPlayer)
         {
             _enemyAI = enemyAI;
             _enemyStateMachine = enemyStateMachine;
@@ -21,7 +21,7 @@ namespace CodeBase.Logic.Killer
         public void Enter()
         {
             _enemyAI.NavMeshAgent.speed = _enemyAI.RunSpeed;
-            _soundPlayer.PlayLoopSound();
+            _soundPlayer.PlayScreamSound();
             Debug.Log("Enter Chase State");
         }
 
@@ -43,7 +43,7 @@ namespace CodeBase.Logic.Killer
 
         public void Exit()
         {
-            _soundPlayer.StopSound();
+            _soundPlayer.StopScreamSound();
             _enemyAnimator.Run(false);
         }
     }

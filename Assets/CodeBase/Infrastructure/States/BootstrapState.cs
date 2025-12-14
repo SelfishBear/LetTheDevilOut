@@ -39,6 +39,7 @@ namespace CodeBase.Infrastructure.States
         private void RegisterServices()
         {
             RegisterStaticDataService();
+            _services.RegisterSingle<ITimeService>(new TimeService());
 
             _services.RegisterSingle<ICursorService>(new CursorService());
             _services.RegisterSingle<IGameStateMachine>(_stateMachine);
@@ -65,7 +66,9 @@ namespace CodeBase.Infrastructure.States
 
             _services.RegisterSingle<ISaveLoadService>(new SaveLoadService(
                 _services.Single<IPersistentProgressService>(),
-                _services.Single<IGameFactory>()));
+                _services.Single<IGameFactory>(),
+                _services.Single<IUIFactory>()
+                ));
         }
 
         private void RegisterAssetProvider()
@@ -81,7 +84,10 @@ namespace CodeBase.Infrastructure.States
             _services.RegisterSingle(staticData);
         }
 
-        private void EnterLoadLevel() =>
-            _stateMachine.Enter<MonologueState, string>("Monologue");
+        private void EnterLoadLevel()
+        {
+            _stateMachine.Enter<MainMenuState, string>("MainMenu");
+            // _stateMachine.Enter<LoadProgressState>();
+        }
     }
 }

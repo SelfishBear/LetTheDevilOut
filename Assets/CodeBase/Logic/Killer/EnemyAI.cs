@@ -12,7 +12,7 @@ namespace CodeBase.Logic.Killer
 {
     public class EnemyAI : MonoBehaviour
     {
-        [SerializeField] private SoundPlayer _soundPlayer;
+        [SerializeField] private KillerScreamSound _soundPlayer;
         [SerializeField] private LayerMask _wallLayerMask;
         [SerializeField] private LayerMask _playerLayerMask;
         [SerializeField] private EnemyAnimator _enemyAnimator;
@@ -144,6 +144,7 @@ namespace CodeBase.Logic.Killer
 
         public void OnAttack()
         {
+            _targetPlayer.PlayerHealth.TakeDamage(100);
             _enemyStateMachine.ChangeState(new RetreatState(this, _enemyStateMachine, _enemyAnimator, _soundPlayer));
         }
     }

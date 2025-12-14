@@ -40,12 +40,27 @@ namespace CodeBase.UI.Services.Factory
         public void CreateSettingsWindow()
         {
             WindowConfig config = _staticData.ForWindow(WindowId.SettingsWindow);
-            SettingsWindow window = Object.Instantiate(config.Template, _uiRoot) as SettingsWindow;
+            SettingsWindow window = Object.Instantiate(config.Template) as SettingsWindow;
+            RegisterProgressWatchers(window.gameObject);
         }
 
         public void CreateUIRoot()
         {
             _uiRoot = _assets.Instantiate(UIRootPath).transform;
+        }
+        
+        private void RegisterProgressWatchers(GameObject gameObject)
+        {
+            foreach (ISavedProgressReader progressReader in gameObject.GetComponentsInChildren<ISavedProgressReader>())
+                Register(progressReader);
+        }
+        
+        private void Register(ISavedProgressReader progressReader)
+        {
+            if (progressReader is ISavedProgress progressWriter)
+                ProgressWriters.Add(progressWriter);
+
+            ProgressReaders.Add(progressReader);
         }
     }
 }

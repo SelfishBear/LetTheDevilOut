@@ -1,4 +1,5 @@
-﻿using CodeBase.Logic;
+﻿using CodeBase.Audio;
+using CodeBase.Logic;
 using UnityEngine;
 
 namespace CodeBase.PlayerLogic
@@ -7,5 +8,9 @@ namespace CodeBase.PlayerLogic
     {
         [field: SerializeField] public PlayerSprint PlayerSprint { get; set; }
         [field: SerializeField] public Interactor Interactor { get; set; }
+        [field: SerializeField] public SFXAudioSources SfxAudioSources { get; set; }
+        [field: SerializeField] public MusicAudioSource MusicAudioSource { get; set; }
+        [field: SerializeField] public PlayerHealth PlayerHealth { get; set; }
+        
     }
 }

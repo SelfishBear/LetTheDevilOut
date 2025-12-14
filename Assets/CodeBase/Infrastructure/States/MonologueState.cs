@@ -21,13 +21,12 @@ namespace CodeBase.Infrastructure.States
 
         public void Enter(string payload)
         {
-            _loadingCurtain.Show();
+            _loadingCurtain.Hide();
             _sceneLoader.Load(payload, onLoaded: OnLoaded);
         }
 
         private void OnLoaded()
         {
-            _loadingCurtain.Hide();
         }
 
         public void Exit()
