@@ -10,7 +10,7 @@ namespace CodeBase.UI.HUD
 		
         public void Show(string interactionMessage)
         {
-            _interactionText.text = $"{interactionMessage} + INTERACT";
+            _interactionText.text = $"{interactionMessage} - INTERACT";
             _canvasGroup.alpha = 1;
             _canvasGroup.blocksRaycasts = true;
         }

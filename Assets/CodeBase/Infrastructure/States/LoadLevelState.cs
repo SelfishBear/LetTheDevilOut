@@ -58,6 +58,7 @@ namespace CodeBase.Infrastructure.States
         {
             InitUIRoot();
             InitSettingsWindow();
+            InitEndGameWindow();
             InitGameWorld();
             InformProgressReaders();
 
@@ -67,6 +68,11 @@ namespace CodeBase.Infrastructure.States
         private void InitSettingsWindow()
         {
             _windowService.Open(WindowId.SettingsWindow);
+        }
+        
+        private void InitEndGameWindow()
+        {
+            _windowService.Open(WindowId.EndGameUI);
         }
 
         private void InitUIRoot()

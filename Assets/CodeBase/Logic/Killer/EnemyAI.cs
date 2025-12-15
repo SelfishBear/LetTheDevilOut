@@ -13,6 +13,7 @@ namespace CodeBase.Logic.Killer
     public class EnemyAI : MonoBehaviour
     {
         [SerializeField] private KillerScreamSound _soundPlayer;
+        [SerializeField] private KillerHitSound _hitSound;
         [SerializeField] private LayerMask _wallLayerMask;
         [SerializeField] private LayerMask _playerLayerMask;
         [SerializeField] private EnemyAnimator _enemyAnimator;
@@ -54,7 +55,8 @@ namespace CodeBase.Logic.Killer
 
         private void Start()
         {
-            _enemyStateMachine.ChangeState<PatrolState>(new PatrolState(this, _enemyStateMachine, _enemyAnimator, _soundPlayer));
+            _enemyStateMachine.ChangeState<PatrolState>(new PatrolState(this, _enemyStateMachine, _enemyAnimator,
+                _soundPlayer));
         }
 
         private void Update()
@@ -114,7 +116,7 @@ namespace CodeBase.Logic.Killer
             float distanceToPlayer = directionToPlayer.magnitude;
             if (distanceToPlayer > _attackRange)
                 return false;
-            
+
             return true;
         }
 
@@ -145,6 +147,7 @@ namespace CodeBase.Logic.Killer
         public void OnAttack()
         {
             _targetPlayer.PlayerHealth.TakeDamage(100);
+            _hitSound.PlayKillerHitSound();
             _enemyStateMachine.ChangeState(new RetreatState(this, _enemyStateMachine, _enemyAnimator, _soundPlayer));
         }
     }

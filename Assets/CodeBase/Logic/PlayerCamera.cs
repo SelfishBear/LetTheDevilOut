@@ -1,6 +1,7 @@
 ﻿using System;
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.GameplayServices;
+using CodeBase.Infrastructure.Services.Input;
 using UnityEngine;
 
 namespace CodeBase.Logic
@@ -21,6 +22,8 @@ namespace CodeBase.Logic
         private float _yaw;
         private float _pitch;
         private ICursorService _cursorService;
+        private IInputService _inputService;
+        private InputSystem_Actions _inputActions;
 
         public float FOV => _fov;
 
@@ -33,6 +36,9 @@ namespace CodeBase.Logic
         {
             _cursorService = AllServices.Container.Single<ICursorService>();
             _cursorService.ChangeCursorState(_isCursorVisible, _isCursorLocked);
+            
+            _inputService = AllServices.Container.Single<IInputService>();
+            _inputActions = _inputService.GetPlayerInputActions();
         }
 
         private void Update()
@@ -43,16 +49,16 @@ namespace CodeBase.Logic
         public void HandleCameraRotation()
         {
             if (!_cameraCanMove) return;
-
-            _yaw = _playerTransform.localEulerAngles.y + Input.GetAxis("Mouse X") * _mouseSensitivity;
+            
+            _yaw = _playerTransform.localEulerAngles.y + _inputService.LookDirection.x * _mouseSensitivity;
 
             if (!_invertCamera)
             {
-                _pitch -= _mouseSensitivity * Input.GetAxis("Mouse Y");
+                _pitch -= _mouseSensitivity * _inputService.LookDirection.y;
             }
             else
             {
-                _pitch += _mouseSensitivity * Input.GetAxis("Mouse Y");
+                _pitch += _mouseSensitivity * _inputService.LookDirection.y;
             }
 
             _pitch = Mathf.Clamp(_pitch, -_maxLookAngle, _maxLookAngle);

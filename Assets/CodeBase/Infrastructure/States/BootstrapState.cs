@@ -86,8 +86,8 @@ namespace CodeBase.Infrastructure.States
 
         private void EnterLoadLevel()
         {
-            _stateMachine.Enter<MainMenuState, string>("MainMenu");
-            // _stateMachine.Enter<LoadProgressState>();
+            // _stateMachine.Enter<MainMenuState, string>("MainMenu");
+            _stateMachine.Enter<LoadProgressState>();
         }
     }
 }

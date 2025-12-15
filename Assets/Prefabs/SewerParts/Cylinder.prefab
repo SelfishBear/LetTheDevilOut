@@ -12,7 +12,8 @@ GameObject:
   - component: {fileID: 7696632232874431908}
   - component: {fileID: 3811148928352634315}
   - component: {fileID: 1490368185722187820}
-  m_Layer: 0
+  - component: {fileID: 6050442240961113785}
+  m_Layer: 3
   m_Name: Cylinder
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -27,13 +28,13 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8452448257025433888}
   serializedVersion: 2
-  m_LocalRotation: {x: -0.7071068, y: 0, z: -0, w: 0.7071067}
+  m_LocalRotation: {x: -0.7069834, y: 0, z: 0, w: 0.7072302}
   m_LocalPosition: {x: 3.0723007, y: 3.7944362, z: 32.819946}
   m_LocalScale: {x: 100, y: 100, z: 100}
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+  m_LocalEulerAnglesHint: {x: -89.98, y: 0, z: 0}
 --- !u!33 &7696632232874431908
 MeshFilter:
   m_ObjectHideFlags: 0
@@ -111,3 +112,17 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 0.00095516397, y: 0.009012445, z: 0.07457293}
   m_Center: {x: -0.00014530994, y: 5.6081787e-18, z: -0.006905141}
+--- !u!114 &6050442240961113785
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8452448257025433888}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: a6d6814ac0bf4624be740e24b071b4af, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::CodeBase.Logic.Ladder
+  <Interactable>k__BackingField: 1
+  <InteractionMessage>k__BackingField: ESCAPE

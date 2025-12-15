@@ -26,16 +26,31 @@ namespace CodeBase.UI.Services.Factory
             _staticData = staticData;
         }
 
+        public EndGameUI EndGameUI { get; private set; }
+
         public List<ISavedProgressReader> ProgressReaders { get; } = new List<ISavedProgressReader>();
 
         public List<ISavedProgress> ProgressWriters { get; } = new List<ISavedProgress>();
 
+
         // public void CreateTutorialPanel()
+
         // {
+
         // 	WindowConfig config = _staticData.ForWindow(WindowId.TutorialPanel);
+
         // 	TutorialCanvas window = Object.Instantiate(config.Template, _uiRoot) as TutorialCanvas;
+
         // 	window?.Init(_stateMachine, _progressService, _loadingCurtain, _factory);
+
         // }
+
+
+        public void CreateEndGameWindow()
+        {
+            WindowConfig config = _staticData.ForWindow(WindowId.EndGameUI);
+            EndGameUI = Object.Instantiate(config.Template) as EndGameUI;
+        }
 
         public void CreateSettingsWindow()
         {

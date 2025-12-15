@@ -21,6 +21,9 @@ namespace CodeBase.UI.Services.Windows
                 case WindowId.SettingsWindow:
                     _uiFactory.CreateSettingsWindow();
                     break;
+                case WindowId.EndGameUI:
+                    _uiFactory.CreateEndGameWindow();
+                    break;
             }
         }
     }

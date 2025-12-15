@@ -38,6 +38,8 @@ namespace CodeBase.Logic
             float targetAngle = isOpen ? 0f : 90f;
             Quaternion targetRotation = Quaternion.Euler(0, targetAngle, 0);
             transform.rotation = targetRotation;
+            
+            Interactable = false;
         }
     }
 }
