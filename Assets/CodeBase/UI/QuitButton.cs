@@ -13,6 +13,11 @@ namespace CodeBase.UI
             _quitButton.onClick.AddListener(OnQuitButtonClicked);
         }
 
+        private void OnEnable()
+        {
+            _quitButton.onClick.AddListener(OnQuitButtonClicked);
+        }
+
         private void OnDestroy()
         {
             _quitButton.onClick.RemoveListener(OnQuitButtonClicked);

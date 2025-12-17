@@ -24,6 +24,9 @@ namespace CodeBase.Infrastructure.States
                 
                 [typeof(MonologueState)] = new MonologueState(this, sceneLoader, services, loadingCurtain),
                 
+                [typeof(EndingDanceState)] = new EndingDanceState(this, sceneLoader, services, loadingCurtain),
+                [typeof(EndingRunningState)] = new EndingRunningState(this, sceneLoader, services, loadingCurtain),
+                
                 [typeof(MainMenuState)] = new MainMenuState(this, sceneLoader, services, loadingCurtain),
                 
                 [typeof(LoadLevelState)] = new LoadLevelState(this, sceneLoader, loadingCurtain,

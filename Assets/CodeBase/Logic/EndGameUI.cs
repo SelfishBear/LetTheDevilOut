@@ -2,13 +2,14 @@
 using CodeBase.Infrastructure.Services;
 using CodeBase.Infrastructure.Services.GameplayServices;
 using CodeBase.Infrastructure.Services.Input;
+using CodeBase.Infrastructure.States;
 using CodeBase.StaticData.Windows;
 using UnityEngine;
 using UnityEngine.UI;
 
 namespace CodeBase.Logic
 {
-    public class EndGameUI : WindowBase  
+    public class EndGameUI : WindowBase
     {
         [SerializeField] private Button _revengeButton;
         [SerializeField] private Button _escapeButton;
@@ -18,11 +19,14 @@ namespace CodeBase.Logic
         private IInputService _inputService;
         private InputSystem_Actions _inputActions;
         private ICursorService _cursorService;
+        private IGameStateMachine _gameStateMachine;
 
         protected override void Initialize()
         {
             _inputService = AllServices.Container.Single<IInputService>();
             _inputActions = _inputService.GetPlayerInputActions();
+
+            _gameStateMachine = AllServices.Container.Single<IGameStateMachine>();
 
             _cursorService = AllServices.Container.Single<ICursorService>();
 
@@ -32,12 +36,12 @@ namespace CodeBase.Logic
 
         private void TakeRevenge()
         {
-            //TODO: Implement revenge logic
+            _gameStateMachine.Enter<EndingRunningState, string>("EndingDanceBattle");
         }
 
         private void Escape()
         {
-            //TODO: Implement escape logic  
+            _gameStateMachine.Enter<EndingDanceState, string>("EndingRunning");
         }
 
         public void Show()

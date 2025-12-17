@@ -18,6 +18,9 @@ namespace CodeBase.Logic
 
     public class DanceMiniGame : MonoBehaviour
     {
+        [SerializeField] private PlayerDanceAnimator _playerDanceAnimator;
+        [SerializeField] private EnemyDanceAnimator _killerDanceAnimator;
+        
         [Header("Rounds Settings")] [SerializeField]
         private int _round1Duration = 40;
 
@@ -32,6 +35,8 @@ namespace CodeBase.Logic
         [SerializeField] private TextMeshProUGUI _roundTimerText;
         [SerializeField] private TextMeshProUGUI _countDownText;
         [SerializeField] private Slider _progressSlider;
+
+        [SerializeField] private Button _quitButton;
 
         [Header("Gameplay Settings")]
         [SerializeField] private int _countdownFrom = 5;
@@ -97,6 +102,12 @@ namespace CodeBase.Logic
             _killerPushRate = newRate;
         }
 
+        private void PlayAnimations(int index)
+        {
+            _killerDanceAnimator.PlayDance(index);
+            _playerDanceAnimator.PlayDance(index);
+        }
+
         private void StartNewRound(GameRound gameRound)
         {
             _gameRound = gameRound;
@@ -104,17 +115,20 @@ namespace CodeBase.Logic
             {
                 case GameRound.Round1:
                     _currentRoundText.text = "Round 1 / 3";
-                    SetKillerPushRate(0.05f);
+                    SetKillerPushRate(0.03f);
+                    PlayAnimations(1);
                     StartCoroutine(RoundCountingRoutine(_round1Duration, GameRound.Round2));
                     break;
                 case GameRound.Round2:
                     _currentRoundText.text = "Round 2 / 3";
-                    SetKillerPushRate(0.03f);
+                    SetKillerPushRate(0.025f);
+                    PlayAnimations(2);
                     StartCoroutine(RoundCountingRoutine(_round2Duration, GameRound.Round3));
                     break;
                 case GameRound.Round3:
                     _currentRoundText.text = "Round 3 / 3";
-                    SetKillerPushRate(0.027f);
+                    SetKillerPushRate(0.02f);
+                    PlayAnimations(3);
                     StartCoroutine(RoundCountingRoutine(_round3Duration, GameRound.End));
                     break;
                 case GameRound.End:
@@ -129,6 +143,7 @@ namespace CodeBase.Logic
             {
                 _countDownText.color = Color.green;
                 _countDownText.text = "You Win!";
+                _quitButton.gameObject.SetActive(true);
             }
             else
             {

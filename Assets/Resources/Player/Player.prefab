@@ -687,7 +687,7 @@ MonoBehaviour:
   _playerMovement: {fileID: 383737225334354780}
   _playerSprint: {fileID: 8618004525186996265}
   _stepInterval: 0.5
-  _sprintStepInterval: 0.2
+  _sprintStepInterval: 0.4
 --- !u!1 &1359957461033654062
 GameObject:
   m_ObjectHideFlags: 0
